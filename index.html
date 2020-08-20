@@ -152,6 +152,131 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/19/nlp-intruduction/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Marlowe">
+      <meta itemprop="description" content="静水流深">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Marlowe's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/19/nlp-intruduction/" class="post-title-link" itemprop="url">nlp intruduction</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-19 21:20:27" itemprop="dateCreated datePublished" datetime="2020-08-19T21:20:27+08:00">2020-08-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-21 00:22:57" itemprop="dateModified" datetime="2020-08-21T00:22:57+08:00">2020-08-21</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Intruduction-to-NLP"><a href="#Intruduction-to-NLP" class="headerlink" title="Intruduction to NLP"></a>Intruduction to NLP</h1><h2 id="传统自然语言处理："><a href="#传统自然语言处理：" class="headerlink" title="传统自然语言处理："></a>传统自然语言处理：</h2><p>单词通过独热向量表示</p>
+<h3 id="solutions："><a href="#solutions：" class="headerlink" title="solutions："></a>solutions：</h3><p>使用类似WordNet的工具中的列表，获得相似度，但会因不够完整而失败</p>
+<p>学习在向量本身中编码的相似性</p>
+<h3 id="representing-words-by-their-context"><a href="#representing-words-by-their-context" class="headerlink" title="representing words by their context"></a>representing words by their context</h3><p>词向量 word vectors/词嵌入 word embeddings/词表示 word representations</p>
+<p>使用中心词c和上下文单词o的词向量的相似性来计算给定c的o的概率</p>
+<p><img src="/2020/08/19/nlp-intruduction/image-20200820172423910.png" alt="image-20200820172423910"><br>$$<br>Likelihood = L(\theta) = \prod_{t=1}^T\prod_{-m \leq j \leq m, j \neq 0 } P(w_{t+j}|w_t;\theta)\<br>cost function:J(\theta) = -\frac 1 T logL(\theta) \<br>连乘使用转化为连加，最小化目标函数\rightleftharpoons 最大化预测精度\<br>word2vec.prediction.function:P(o|c)=\frac {exp(u_o^T v_c)} {\sum_{w \epsilon V}exp(u_x^T v_c)}\<br>\frac \partial {\partial u_o}logP(o|c) = (1-P(o|c))v_c<br>$$<br>推导过程：</p>
+<p>[cs224n lecture1]([<a target="_blank" rel="noopener" href="https://github.com/LooperXX/CS224n-Reading-Notes/blob/master/CS224n-2019-01-Introduction%20and%20Word%20Vectors.pdf]">https://github.com/LooperXX/CS224n-Reading-Notes/blob/master/CS224n-2019-01-Introduction%20and%20Word%20Vectors.pdf]</a>(<a target="_blank" rel="noopener" href="https://github.com/LooperXX/CS224n-Reading-Notes/blob/master/CS224n-2019-01-Introduction">https://github.com/LooperXX/CS224n-Reading-Notes/blob/master/CS224n-2019-01-Introduction</a> and Word Vectors.pdf))</p>
+<h3 id="SVD-Based-Methods"><a href="#SVD-Based-Methods" class="headerlink" title="SVD Based Methods:"></a>SVD Based Methods:</h3><p>遍历数据集和统计词的共现计数矩阵X,进行SVD分解得到$USV^T$,用U的行来作为字典中所有词的向量</p>
+<p>X的选择：</p>
+<ul>
+<li>word-document matrix </li>
+</ul>
+<p>词i出现在文档j $X_{ij} ++$</p>
+<ul>
+<li>window based co-occurrence matrix</li>
+</ul>
+<p>X存储单词的共现，成为关联矩阵；计算每个单词在特定大小的窗口中出现的次数</p>
+<p>X $\rightarrow |V| * |V|$</p>
+<p>X上应用SVD得到$X=USV^T$</p>
+<p>选择U前k行得到k维词向量</p>
+<p>$\frac {\sum _{i=1}^k \delta_i} {\sum_{i=1}^{|V|} \delta_i}$表示第一个k维捕获的方差量</p>
+<h3 id="Iteration-Based-Methods-Word2vec"><a href="#Iteration-Based-Methods-Word2vec" class="headerlink" title="Iteration Based Methods - Word2vec"></a>Iteration Based Methods - Word2vec</h3><p>基于迭代的方法一次捕获一个单词的共现情况</p>
+<p>word2vec:</p>
+<ul>
+<li><p>CBOW &amp; skip-gram</p>
+</li>
+<li><p>negative sampling &amp; hierarchical softmax</p>
+</li>
+</ul>
+<p>$$<br>P(w1,w2,…,w_n)=\prod_{i=1}^n P(w_i)\<br>\Rightarrow \prod P(w_i|w_{i-1})\<br>$$</p>
+<h4 id="CBOW"><a href="#CBOW" class="headerlink" title="CBOW"></a>CBOW</h4><p>学习两个向量：v(输入向量)当词在上下文中 &amp; u(输出向量)当词是中心词</p>
+<p>输入one-hot向量$x^{(c)}$  ,输出$y^{(c)}$ (已知中心词的one-hot向量)</p>
+<p>$V 输入词矩阵 \quad U输出词矩阵\quad w^i 词汇表单词 \quad \v^i \quad v的第i列 \quad  u^i \quad u的第i行$</p>
+<p>model: </p>
+<ol>
+<li><p>输入上下文，生成one-hot向量($输入x^{c-m},…,x^{c+m}，不包含x^c$) </p>
+</li>
+<li><p>得到嵌入词向量($v^{c-m}=Vx^{c-m},…,v^{c+m}$)</p>
+</li>
+<li><p>求平均$\hat v = \frac {v_{c-m} +…+v_{c+m}} {2m}$</p>
+</li>
+<li><p>生成分数向量$z=U\hat v$ ，相似向量点积越高，相似词更为靠近，从而获得更高的分数</p>
+<p>分数转换为$\hat y =softmac(z)$</p>
+</li>
+</ol>
+<p>![批注 2020-08-20 202453](nlp-intruduction/批注 2020-08-20 202453.png)</p>
+<p>损失函数(交叉熵)：$h(\hat y,y)=-y_j log(\hat y_j)$</p>
+<p>优化目标函数：</p>
+<p>$min J = -u_c^T \hat v + log\sum_{j=1}^{|V|}exp(u_j^T \hat v)$</p>
+<p>利用SGD更新所有相关的词向量</p>
+<h4 id="Skip-Gram-Model"><a href="#Skip-Gram-Model" class="headerlink" title="Skip-Gram Model"></a>Skip-Gram Model</h4><p>与CBOW大体相同，交换x与y</p>
+<p><img src="/2020/08/19/nlp-intruduction/image-20200820203325555.png" alt="image-20200820203325555"></p>
+<p>$min J= \sum_{j=0，j\neq m}^{2m} u_{c-m+j}^Tv_C +2mlog\sum_{k=1}^{|V|}exp(u_k^Tv_c)$</p>
+<p>利用朴素贝叶斯假设拆分概率，利用SGD 更新词向量</p>
+<h4 id="Negtive-Sampling"><a href="#Negtive-Sampling" class="headerlink" title="Negtive Sampling"></a>Negtive Sampling</h4><p>训练时不去直接计算，抽取负样例</p>
+<p>如果中心词和上下文词在语料库中，最大化概率$P(D=1|w,c)$；如果不在，最大化概率$P(D=0|w,c)$。对这两个概率采用极大似然估计的方法：<br>$$<br>\theta =argmax_{\theta}\prod_{(w,c)\in D}P(D=1|w,c,\theta)\prod_{(w,c)\in \overline D}(P=0|w,c,\theta)\=argmax_{\theta}\sum_{(w,c)\in D}log \frac 1 {1+exp(-u_w^Tv_c)}+\sum_{ {(w,c)\in\overline D} }\frac 1 {1+exp(u_w^Tv_c)}<br>$$<br>$\overline D 为”假的”或者”负的”语料$</p>
+<p><img src="/2020/08/19/nlp-intruduction/image-20200820232926546.png" alt="image-20200820232926546"></p>
+<h4 id="Hierarchical-Softmax"><a href="#Hierarchical-Softmax" class="headerlink" title="Hierarchical Softmax"></a>Hierarchical Softmax</h4><p>相对低频词表现更好，负采样对高频词和较低维度向量表现得更好</p>
+<p>单词作为输出单词的概率定义为从根随机游走到单词所对应的叶的概率</p>
+<p><img src="/2020/08/19/nlp-intruduction/image-20200820233524692.png" alt="image-20200820233524692"></p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p><a target="_blank" rel="noopener" href="https://github.com/LooperXX/CS224n-Reading-Notes">cs224n notes</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/18/%E7%AE%80%E5%8D%95%E5%88%86%E7%B1%BB%E6%A8%A1%E5%9E%8B%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -391,14 +516,14 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
