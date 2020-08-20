@@ -183,7 +183,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-21 01:07:30" itemprop="dateModified" datetime="2020-08-21T01:07:30+08:00">2020-08-21</time>
+                <time title="修改时间：2020-08-21 02:00:15" itemprop="dateModified" datetime="2020-08-21T02:00:15+08:00">2020-08-21</time>
               </span>
 
           
@@ -198,9 +198,9 @@
 
       
           <h1 id="Intruduction-to-NLP"><a href="#Intruduction-to-NLP" class="headerlink" title="Intruduction to NLP"></a>Intruduction to NLP</h1><h2 id="传统自然语言处理："><a href="#传统自然语言处理：" class="headerlink" title="传统自然语言处理："></a>传统自然语言处理：</h2><p>单词通过独热向量表示</p>
-<h3 id="solutions："><a href="#solutions：" class="headerlink" title="solutions："></a>solutions：</h3><p>使用类似WordNet的工具中的列表，获得相似度，但会因不够完整而失败</p>
+<h3 id="Solutions："><a href="#Solutions：" class="headerlink" title="Solutions："></a>Solutions：</h3><p>使用类似WordNet的工具中的列表，获得相似度，但会因不够完整而失败</p>
 <p>学习在向量本身中编码的相似性</p>
-<h3 id="representing-words-by-their-context"><a href="#representing-words-by-their-context" class="headerlink" title="representing words by their context"></a>representing words by their context</h3><p>词向量 word vectors/词嵌入 word embeddings/词表示 word representations</p>
+<h3 id="Representing-Words-By-Their-Context"><a href="#Representing-Words-By-Their-Context" class="headerlink" title="Representing Words By Their Context"></a>Representing Words By Their Context</h3><p>词向量 word vectors/词嵌入 word embeddings/词表示 word representations</p>
 <p>使用中心词c和上下文单词o的词向量的相似性来计算给定c的o的概率</p>
 <p><img src="/2020/08/19/nlp-intruduction/image-20200820172423910.png" alt="image-20200820172423910"></p>
 <script type="math/tex; mode=display">
@@ -267,6 +267,18 @@ P(w1,w2,...,w_n)=\prod_{i=1}^n P(w_i)\\\\
 <p>单词作为输出单词的概率定义为从根随机游走到单词所对应的叶的概率</p>
 <p><img src="/2020/08/19/nlp-intruduction/image-20200820233524692.png" alt="image-20200820233524692"></p>
 <p><img src="/2020/08/19/nlp-intruduction/image-20200821003507910.png" alt="image-20200821003507910"></p>
+<h3 id="高维矩阵降维"><a href="#高维矩阵降维" class="headerlink" title="高维矩阵降维"></a>高维矩阵降维</h3><p>利用SVD      $X \rightarrow U\sum V^T$</p>
+<p>$\sum$为对角矩阵，U,V为对应行和列的正交基</p>
+<p>为减少尺度同时保存有效信息，可保留对角矩阵最大的k个值，并将U,V对应的行列保留</p>
+<p>但对于大型矩阵来说计算代价昂贵</p>
+<ul>
+<li>tricks：对高频词进行缩放/使用person相关系数/在基于window的计数中，提高更加接近的单词的计数</li>
+</ul>
+<h3 id="Encoding-meaning-in-vector-differences"><a href="#Encoding-meaning-in-vector-differences" class="headerlink" title="Encoding meaning in vector differences"></a>Encoding meaning in vector differences</h3><p>重视概率之间比值而非单一概率</p>
+<p><img src="/2020/08/19/nlp-intruduction/image-20200821015155082.png" alt="image-20200821015155082"></p>
+<h3 id="词向量评估"><a href="#词向量评估" class="headerlink" title="词向量评估"></a>词向量评估</h3><p><img src="/2020/08/19/nlp-intruduction/image-20200821015332771.png" alt="image-20200821015332771"></p>
+<h4 id="GloVe"><a href="#GloVe" class="headerlink" title="GloVe"></a>GloVe</h4><p>利用全局统计量，以最小二乘为目标，预测单词j出现在单词i上下文中的概率</p>
+<p>$\hat J=\sum_{i=1}^W\sum_{j=1}^Wf(X_{ij})(u_j^Tv_i-logX_{ij})^2$</p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p><a target="_blank" rel="noopener" href="https://github.com/LooperXX/CS224n-Reading-Notes">cs224n notes</a></p>
 
       
