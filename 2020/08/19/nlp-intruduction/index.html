@@ -34,7 +34,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/08/19/nlp-intruduction/image-20200820233524692.png">
 <meta property="og:image" content="http://yoursite.com/2020/08/19/nlp-intruduction/image-20200821003507910.png">
 <meta property="article:published_time" content="2020-08-19T13:20:27.000Z">
-<meta property="article:modified_time" content="2020-08-20T16:35:40.841Z">
+<meta property="article:modified_time" content="2020-08-20T16:47:53.441Z">
 <meta property="article:author" content="Marlowe">
 <meta property="article:tag" content="nlp">
 <meta name="twitter:card" content="summary">
@@ -193,7 +193,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-21 00:35:40" itemprop="dateModified" datetime="2020-08-21T00:35:40+08:00">2020-08-21</time>
+                <time title="修改时间：2020-08-21 00:47:53" itemprop="dateModified" datetime="2020-08-21T00:47:53+08:00">2020-08-21</time>
               </span>
 
           
@@ -219,7 +219,7 @@ cost function:J(\theta) = -\frac 1 T logL(\theta) \\
 连乘使用转化为连加，最小化目标函数\rightleftharpoons 最大化预测精度\\\
 word2vec.prediction.function:P(o|c)=\frac {exp(u_o^T v_c)} {\sum_{w \epsilon V}exp(u_x^T v_c)}\\
 \frac \partial {\partial u_o}logP(o|c) = (1-P(o|c))v_c</script><p>推导过程：</p>
-<p><a href="[https://github.com/LooperXX/CS224n-Reading-Notes/blob/master/CS224n-2019-01-Introduction%20and%20Word%20Vectors.pdf](https://github.com/LooperXX/CS224n-Reading-Notes/blob/master/CS224n-2019-01-Introduction and Word Vectors.pdf">cs224n lecture1</a>)</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/LooperXX/CS224n-Reading-Notes/blob/master/CS224n-2019-01-Introduction%20and%20Word%20Vectors.pdf">cs224n lecture1</a></p>
 <h3 id="SVD-Based-Methods"><a href="#SVD-Based-Methods" class="headerlink" title="SVD Based Methods:"></a>SVD Based Methods:</h3><p>遍历数据集和统计词的共现计数矩阵X,进行SVD分解得到$USV^T$,用U的行来作为字典中所有词的向量</p>
 <p>X的选择：</p>
 <ul>
@@ -466,6 +466,59 @@ P(w1,w2,...,w_n)=\prod_{i=1}^n P(w_i)\\
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 
