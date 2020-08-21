@@ -183,7 +183,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-21 02:00:15" itemprop="dateModified" datetime="2020-08-21T02:00:15+08:00">2020-08-21</time>
+                <time title="修改时间：2020-08-21 11:10:55" itemprop="dateModified" datetime="2020-08-21T11:10:55+08:00">2020-08-21</time>
               </span>
 
           
@@ -204,10 +204,10 @@
 <p>使用中心词c和上下文单词o的词向量的相似性来计算给定c的o的概率</p>
 <p><img src="/2020/08/19/nlp-intruduction/image-20200820172423910.png" alt="image-20200820172423910"></p>
 <script type="math/tex; mode=display">
-Likelihood = L(\theta) = \prod_{t=1}^T\prod_{-m \leq j \leq m, j \neq 0 } P(w_{t+j}|w_t;\theta)\\\\
+Likelihood = L(\theta) = \prod_{t=1}^T\prod_{-m \leq j \leq m, j \neq 0 } P(w_{t+j}|w_t;\theta) \\\\
 cost function:J(\theta) = -\frac 1 T logL(\theta) \\\\
-连乘使用转化为连加，最小化目标函数\rightleftharpoons 最大化预测精度\\\\
-word2vec.prediction.function:P(o|c)=\frac {exp(u_o^T v_c)} {\sum_{w \epsilon V}exp(u_x^T v_c)}\\\\
+连乘使用转化为连加，最小化目标函数\rightleftharpoons 最大化预测精度 \\\\
+word2vec.prediction.function:P(o|c)=\frac {exp(u_o^T v_c)} {\sum_{w \epsilon V}exp(u_x^T v_c)} \\\\
 \frac \partial {\partial u_o}logP(o|c) = (1-P(o|c))v_c</script><p>推导过程：</p>
 <p><a target="_blank" rel="noopener" href="https://github.com/LooperXX/CS224n-Reading-Notes/blob/master/CS224n-2019-01-Introduction%20and%20Word%20Vectors.pdf">cs224n lecture1</a></p>
 <h3 id="SVD-Based-Methods"><a href="#SVD-Based-Methods" class="headerlink" title="SVD Based Methods:"></a>SVD Based Methods:</h3><p>遍历数据集和统计词的共现计数矩阵X,进行SVD分解得到$USV^T$,用U的行来作为字典中所有词的向量</p>
@@ -233,8 +233,8 @@ word2vec.prediction.function:P(o|c)=\frac {exp(u_o^T v_c)} {\sum_{w \epsilon V}e
 </li>
 </ul>
 <script type="math/tex; mode=display">
-P(w1,w2,...,w_n)=\prod_{i=1}^n P(w_i)\\\\
-\Rightarrow \prod P(w_i|w_{i-1})\\</script><h4 id="CBOW"><a href="#CBOW" class="headerlink" title="CBOW"></a>CBOW</h4><p>学习两个向量：v(输入向量)当词在上下文中 &amp; u(输出向量)当词是中心词</p>
+P(w1,w2,...,w_n)=\prod_{i=1}^n P(w_i) \\\\
+\Rightarrow \prod P(w_i|w_{i-1})</script><h4 id="CBOW"><a href="#CBOW" class="headerlink" title="CBOW"></a>CBOW</h4><p>学习两个向量：v(输入向量)当词在上下文中 &amp; u(输出向量)当词是中心词</p>
 <p>输入one-hot向量$x^{(c)}$  ,输出$y^{(c)}$ (已知中心词的one-hot向量)</p>
 <p>$V 输入词矩阵 \quad U输出词矩阵\quad w^i 词汇表单词 \quad \\v^i \quad v的第i列 \quad  u^i \quad u的第i行$</p>
 <p>model: </p>
@@ -261,7 +261,7 @@ P(w1,w2,...,w_n)=\prod_{i=1}^n P(w_i)\\\\
 <h4 id="Negtive-Sampling"><a href="#Negtive-Sampling" class="headerlink" title="Negtive Sampling"></a>Negtive Sampling</h4><p>训练时不去直接计算，抽取负样例</p>
 <p>如果中心词和上下文词在语料库中，最大化概率$P(D=1|w,c)$；如果不在，最大化概率$P(D=0|w,c)$。对这两个概率采用极大似然估计的方法：</p>
 <script type="math/tex; mode=display">
-\theta =argmax_{\theta}\prod_{(w,c)\in D}P(D=1|w,c,\theta)\prod_{(w,c)\in \overline D}(P=0|w,c,\theta)\\\\=argmax_{\theta}\sum_{(w,c)\in D}log \frac 1 {1+exp(-u_w^Tv_c)}+\sum_{ {(w,c)\in\overline D} }\frac 1 {1+exp(u_w^Tv_c)}</script><p>$\overline D 为”假的”或者”负的”语料$</p>
+\theta =argmax_{\theta}\prod_{(w,c)\in D}P(D=1|w,c,\theta)\prod_{(w,c)\in \overline D}(P=0|w,c,\theta) \\\\ =argmax_{\theta}\sum_{(w,c)\in D}log \frac 1 {1+exp(-u_w^Tv_c)}+\sum_{ {(w,c)\in\overline D} }\frac 1 {1+exp(u_w^Tv_c)}</script><p>$\overline D 为”假的”或者”负的”语料$</p>
 <p><img src="/2020/08/19/nlp-intruduction/image-20200820232926546.png" alt="image-20200820232926546"></p>
 <h4 id="Hierarchical-Softmax"><a href="#Hierarchical-Softmax" class="headerlink" title="Hierarchical Softmax"></a>Hierarchical Softmax</h4><p>相对低频词表现更好，负采样对高频词和较低维度向量表现得更好</p>
 <p>单词作为输出单词的概率定义为从根随机游走到单词所对应的叶的概率</p>
@@ -279,7 +279,7 @@ P(w1,w2,...,w_n)=\prod_{i=1}^n P(w_i)\\\\
 <h3 id="词向量评估"><a href="#词向量评估" class="headerlink" title="词向量评估"></a>词向量评估</h3><p><img src="/2020/08/19/nlp-intruduction/image-20200821015332771.png" alt="image-20200821015332771"></p>
 <h4 id="GloVe"><a href="#GloVe" class="headerlink" title="GloVe"></a>GloVe</h4><p>利用全局统计量，以最小二乘为目标，预测单词j出现在单词i上下文中的概率</p>
 <p>$\hat J=\sum_{i=1}^W\sum_{j=1}^Wf(X_{ij})(u_j^Tv_i-logX_{ij})^2$</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p><a target="_blank" rel="noopener" href="https://github.com/LooperXX/CS224n-Reading-Notes">cs224n notes</a></p>
+<h3 id="NER"><a href="#NER" class="headerlink" title="NER"></a>NER</h3><h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p><a target="_blank" rel="noopener" href="https://github.com/LooperXX/CS224n-Reading-Notes">cs224n notes</a></p>
 
       
     </div>
