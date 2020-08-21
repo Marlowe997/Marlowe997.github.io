@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Basic Knowledeg of NLPNER 命名实体识别problems： 很难计算实体边界 很难知道某物是否为实体 很难知道未知实体的类别 实体类相对模糊，依赖于上下文  Linguistic Structure: Dependency ParsingCinstituency Parsing &#x3D;&#x3D; CFGS 无上下文语法使用逐步嵌套单元构建句子  Dependency Parsing不是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Basic Knowledge of NLP">
+<meta property="og:url" content="http://yoursite.com/2020/08/21/Basic-Knowledge-of-NLP/index.html">
+<meta property="og:site_name" content="Marlowe&#39;s Blog">
+<meta property="og:description" content="Basic Knowledeg of NLPNER 命名实体识别problems： 很难计算实体边界 很难知道某物是否为实体 很难知道未知实体的类别 实体类相对模糊，依赖于上下文  Linguistic Structure: Dependency ParsingCinstituency Parsing &#x3D;&#x3D; CFGS 无上下文语法使用逐步嵌套单元构建句子  Dependency Parsing不是">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/2020/08/21/Basic-Knowledge-of-NLP/image-20200821122531927.png">
+<meta property="og:image" content="http://yoursite.com/2020/08/21/Basic-Knowledge-of-NLP/image-20200821123324892.png">
+<meta property="og:image" content="http://yoursite.com/2020/08/21/Basic-Knowledge-of-NLP/image-20200821123926630.png">
+<meta property="og:image" content="http://yoursite.com/2020/08/21/Basic-Knowledge-of-NLP/image-20200821125235851.png">
+<meta property="og:image" content="http://yoursite.com/2020/08/21/Basic-Knowledge-of-NLP/image-20200821135301082.png">
+<meta property="og:image" content="http://yoursite.com/2020/08/21/Basic-Knowledge-of-NLP/image-20200821140934298.png">
+<meta property="article:published_time" content="2020-08-21T03:44:54.000Z">
+<meta property="article:modified_time" content="2020-08-21T08:20:14.411Z">
+<meta property="article:author" content="Marlowe">
+<meta property="article:tag" content="NLP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/08/21/Basic-Knowledge-of-NLP/image-20200821122531927.png">
+
+<link rel="canonical" href="http://yoursite.com/2020/08/21/Basic-Knowledge-of-NLP/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Basic Knowledge of NLP | Marlowe's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Marlowe's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/21/Basic-Knowledge-of-NLP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Marlowe">
+      <meta itemprop="description" content="静水流深">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Marlowe's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Basic Knowledge of NLP
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-08-21 11:44:54 / 修改时间：16:20:14" itemprop="dateCreated datePublished" datetime="2020-08-21T11:44:54+08:00">2020-08-21</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Basic-Knowledeg-of-NLP"><a href="#Basic-Knowledeg-of-NLP" class="headerlink" title="Basic Knowledeg of NLP"></a>Basic Knowledeg of NLP</h1><h2 id="NER-命名实体识别"><a href="#NER-命名实体识别" class="headerlink" title="NER 命名实体识别"></a>NER 命名实体识别</h2><h3 id="problems："><a href="#problems：" class="headerlink" title="problems："></a>problems：</h3><ul>
+<li>很难计算实体边界</li>
+<li>很难知道某物是否为实体</li>
+<li>很难知道未知实体的类别</li>
+<li>实体类相对模糊，依赖于上下文</li>
+</ul>
+<h2 id="Linguistic-Structure-Dependency-Parsing"><a href="#Linguistic-Structure-Dependency-Parsing" class="headerlink" title="Linguistic Structure: Dependency Parsing"></a>Linguistic Structure: Dependency Parsing</h2><h3 id="Cinstituency-Parsing-CFGS-无上下文语法"><a href="#Cinstituency-Parsing-CFGS-无上下文语法" class="headerlink" title="Cinstituency Parsing == CFGS 无上下文语法"></a>Cinstituency Parsing == CFGS 无上下文语法</h3><p>使用逐步嵌套单元构建句子</p>
+<p><img src="/2020/08/21/Basic-Knowledge-of-NLP/image-20200821122531927.png" alt="image-20200821122531927"></p>
+<h3 id="Dependency-Parsing"><a href="#Dependency-Parsing" class="headerlink" title="Dependency Parsing"></a>Dependency Parsing</h3><p>不是使用各种类型的短语，而是直接通过单词与其他的单词关系表示句子的结构，显示哪些单词依赖于哪些其他单词</p>
+<h2 id="Dependency-Grammar-amp-Dependency-Structure"><a href="#Dependency-Grammar-amp-Dependency-Structure" class="headerlink" title="Dependency Grammar &amp; Dependency Structure"></a>Dependency Grammar &amp; Dependency Structure</h2><p>依赖关系：</p>
+<p><img src="/2020/08/21/Basic-Knowledge-of-NLP/image-20200821123324892.png" alt="image-20200821123324892"></p>
+<h2 id="Greedy-Transition-based-Parsing-贪婪判别依赖解析器的简单形式"><a href="#Greedy-Transition-based-Parsing-贪婪判别依赖解析器的简单形式" class="headerlink" title="Greedy Transition-based Parsing 贪婪判别依赖解析器的简单形式"></a>Greedy Transition-based Parsing 贪婪判别依赖解析器的简单形式</h2><p><img src="/2020/08/21/Basic-Knowledge-of-NLP/image-20200821123926630.png" alt="image-20200821123926630"></p>
+<h2 id="Language-Modeling"><a href="#Language-Modeling" class="headerlink" title="Language Modeling"></a>Language Modeling</h2><p>给定单词序列$x^{(1)},…,x^{(t)}$,计算$x^{(t+1)}$概率分布</p>
+<p>$P(x^{(t+1)}|x^{(t)},…,x^{(1)})$</p>
+<p><img src="/2020/08/21/Basic-Knowledge-of-NLP/image-20200821125235851.png" alt="image-20200821125235851"></p>
+<p>n-gram model:收集不同n-gram出现频率</p>
+<p>平滑数据；后退</p>
+<h2 id="RNN"><a href="#RNN" class="headerlink" title="RNN:"></a>RNN:</h2><p><img src="/2020/08/21/Basic-Knowledge-of-NLP/image-20200821135301082.png" alt="image-20200821135301082"></p>
+<p><img src="/2020/08/21/Basic-Knowledge-of-NLP/image-20200821140934298.png" alt="image-20200821140934298"></p>
+<h2 id="RNN变体"><a href="#RNN变体" class="headerlink" title="RNN变体"></a>RNN变体</h2><h3 id="LSTM"><a href="#LSTM" class="headerlink" title="LSTM"></a>LSTM</h3><h3 id="GRU"><a href="#GRU" class="headerlink" title="GRU"></a>GRU</h3><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a target="_blank" rel="noopener" href="https://github.com/LooperXX/CS224n-Reading-Notes">cs224n notes</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/NLP/" rel="tag"># NLP</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/08/19/nlp-intruduction/" rel="prev" title="nlp intruduction">
+      <i class="fa fa-chevron-left"></i> nlp intruduction
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/08/21/Attention-Is-All-You-Need/" rel="next" title="Attention Is All You Need">
+      Attention Is All You Need <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Basic-Knowledeg-of-NLP"><span class="nav-number">1.</span> <span class="nav-text">Basic Knowledeg of NLP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#NER-%E5%91%BD%E5%90%8D%E5%AE%9E%E4%BD%93%E8%AF%86%E5%88%AB"><span class="nav-number">1.1.</span> <span class="nav-text">NER 命名实体识别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#problems%EF%BC%9A"><span class="nav-number">1.1.1.</span> <span class="nav-text">problems：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linguistic-Structure-Dependency-Parsing"><span class="nav-number">1.2.</span> <span class="nav-text">Linguistic Structure: Dependency Parsing</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Cinstituency-Parsing-CFGS-%E6%97%A0%E4%B8%8A%E4%B8%8B%E6%96%87%E8%AF%AD%E6%B3%95"><span class="nav-number">1.2.1.</span> <span class="nav-text">Cinstituency Parsing &#x3D;&#x3D; CFGS 无上下文语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dependency-Parsing"><span class="nav-number">1.2.2.</span> <span class="nav-text">Dependency Parsing</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dependency-Grammar-amp-Dependency-Structure"><span class="nav-number">1.3.</span> <span class="nav-text">Dependency Grammar &amp; Dependency Structure</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Greedy-Transition-based-Parsing-%E8%B4%AA%E5%A9%AA%E5%88%A4%E5%88%AB%E4%BE%9D%E8%B5%96%E8%A7%A3%E6%9E%90%E5%99%A8%E7%9A%84%E7%AE%80%E5%8D%95%E5%BD%A2%E5%BC%8F"><span class="nav-number">1.4.</span> <span class="nav-text">Greedy Transition-based Parsing 贪婪判别依赖解析器的简单形式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Language-Modeling"><span class="nav-number">1.5.</span> <span class="nav-text">Language Modeling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RNN"><span class="nav-number">1.6.</span> <span class="nav-text">RNN:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RNN%E5%8F%98%E4%BD%93"><span class="nav-number">1.7.</span> <span class="nav-text">RNN变体</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#LSTM"><span class="nav-number">1.7.1.</span> <span class="nav-text">LSTM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GRU"><span class="nav-number">1.7.2.</span> <span class="nav-text">GRU</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">1.8.</span> <span class="nav-text">Reference</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Marlowe</p>
+  <div class="site-description" itemprop="description">静水流深</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2020-08 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Marlowe</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
