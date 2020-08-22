@@ -175,10 +175,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-08-21 16:24:41 / 修改时间：21:21:43" itemprop="dateCreated datePublished" datetime="2020-08-21T16:24:41+08:00">2020-08-21</time>
+              <time title="创建时间：2020-08-21 16:24:41" itemprop="dateCreated datePublished" datetime="2020-08-21T16:24:41+08:00">2020-08-21</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-23 00:52:55" itemprop="dateModified" datetime="2020-08-23T00:52:55+08:00">2020-08-23</time>
+              </span>
 
           
 
@@ -191,7 +197,17 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Attention-Is-All-You-Need"><a href="#Attention-Is-All-You-Need" class="headerlink" title="Attention Is All You Need"></a>Attention Is All You Need</h1><h2 id="Machine-Translation"><a href="#Machine-Translation" class="headerlink" title="Machine Translation"></a>Machine Translation</h2>
+          <h1 id="Attention-Is-All-You-Need"><a href="#Attention-Is-All-You-Need" class="headerlink" title="Attention Is All You Need"></a>Attention Is All You Need</h1><h2 id="Machine-Translation"><a href="#Machine-Translation" class="headerlink" title="Machine Translation"></a>Machine Translation</h2><h3 id="Sequence-Machine-Translation"><a href="#Sequence-Machine-Translation" class="headerlink" title="Sequence Machine Translation"></a>Sequence Machine Translation</h3><p> 想找到欲翻译的最好的句子y，给定句子x<br>$$<br>argmax_yP(y|x)<br>$$<br>使用Bayes将其分解为<br>$$<br>argmax_yP(x|y)P(y)<br>$$<br><img src="/2020/08/21/Attention-Is-All-You-Need/image-20200822111941112.png" alt="image-20200822111941112"></p>
+<p>从并行语料库中学习$P(x|y)$ –对齐关系</p>
+<h3 id="Neural-Machine-Translation"><a href="#Neural-Machine-Translation" class="headerlink" title="Neural Machine Translation"></a>Neural Machine Translation</h3><p>架构： Seq2seq</p>
+<p><img src="/2020/08/21/Attention-Is-All-You-Need/image-20200823002817467.png" alt="image-20200823002817467"></p>
+<p><img src="/2020/08/21/Attention-Is-All-You-Need/blog\source_posts\Attention-Is-All-You-Need\image-20200823004018467.png" alt="image-20200823004018467"></p>
+<h2 id="Seq2seq"><a href="#Seq2seq" class="headerlink" title="Seq2seq"></a>Seq2seq</h2><p> Seq2seq可以适用于许多按照顺序进行表达的任务，e.g. 摘要 对话 解析 代码生成</p>
+<h3 id="Greedy-Decoding"><a href="#Greedy-Decoding" class="headerlink" title="Greedy Decoding"></a>Greedy Decoding</h3><p>每一步都取最可能的单词，无法撤销决定</p>
+<h3 id="Beam-Search-Decoding"><a href="#Beam-Search-Decoding" class="headerlink" title="Beam Search Decoding"></a>Beam Search Decoding</h3><p>在解码器的每一步 跟踪k个最可能的部分翻译</p>
+<p>最终将得分列表按长度标准化，用$\frac 1 t \sum_{i=1}^t P_{LM}(y_i|y_1,…,y_{i-1},x)$选择最大者</p>
+<h2 id="Attention"><a href="#Attention" class="headerlink" title="Attention"></a>Attention</h2><p>在解码器的每一步，使用与编码器的直接连接来专注于源序列的特定部分</p>
+
       
     </div>
 
@@ -233,10 +249,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-08-21 11:44:54 / 修改时间：16:20:14" itemprop="dateCreated datePublished" datetime="2020-08-21T11:44:54+08:00">2020-08-21</time>
+              <time title="创建时间：2020-08-21 11:44:54" itemprop="dateCreated datePublished" datetime="2020-08-21T11:44:54+08:00">2020-08-21</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-22 17:52:02" itemprop="dateModified" datetime="2020-08-22T17:52:02+08:00">2020-08-22</time>
+              </span>
 
           
 
@@ -266,9 +288,17 @@
 <p><img src="/2020/08/21/Basic-Knowledge-of-NLP/image-20200821125235851.png" alt="image-20200821125235851"></p>
 <p>n-gram model:收集不同n-gram出现频率</p>
 <p>平滑数据；后退</p>
-<h2 id="RNN"><a href="#RNN" class="headerlink" title="RNN:"></a>RNN:</h2><p><img src="/2020/08/21/Basic-Knowledge-of-NLP/image-20200821135301082.png" alt="image-20200821135301082"></p>
+<h2 id="RNN"><a href="#RNN" class="headerlink" title="RNN:"></a>RNN:</h2><p><img src="/2020/08/21/Basic-Knowledge-of-NLP/image-20200822162648050.png" alt="image-20200822162648050"></p>
+<p>双向循环神经网络，解决前后文有关联的序列</p>
+<p><img src="/2020/08/21/Basic-Knowledge-of-NLP/Basic-Knowledge-of-NLP%5Cimage-20200822171553321.png" alt="image-20200822171553321"></p>
+<p>反向传播：</p>
+<p><img src="/2020/08/21/Basic-Knowledge-of-NLP/image-20200822171934906.png" alt="image-20200822171934906"></p>
+<p><img src="/2020/08/21/Basic-Knowledge-of-NLP/image-20200821135301082.png" alt="image-20200821135301082"></p>
 <p><img src="/2020/08/21/Basic-Knowledge-of-NLP/image-20200821140934298.png" alt="image-20200821140934298"></p>
-<h2 id="RNN变体"><a href="#RNN变体" class="headerlink" title="RNN变体"></a>RNN变体</h2><h3 id="LSTM"><a href="#LSTM" class="headerlink" title="LSTM"></a>LSTM</h3><h3 id="GRU"><a href="#GRU" class="headerlink" title="GRU"></a>GRU</h3><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a target="_blank" rel="noopener" href="https://github.com/LooperXX/CS224n-Reading-Notes">cs224n notes</a></p>
+<h2 id="RNN变体"><a href="#RNN变体" class="headerlink" title="RNN变体"></a>RNN变体</h2><h3 id="LSTM"><a href="#LSTM" class="headerlink" title="LSTM"></a>LSTM</h3><p><img src="/2020/08/21/Basic-Knowledge-of-NLP/image-20200822174841235.png" alt="image-20200822174841235"></p>
+<h3 id="GRU"><a href="#GRU" class="headerlink" title="GRU"></a>GRU</h3><p><img src="/2020/08/21/Basic-Knowledge-of-NLP/image-20200822175123412.png" alt="image-20200822175123412"></p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a target="_blank" rel="noopener" href="https://github.com/LooperXX/CS224n-Reading-Notes">cs224n notes</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Sampson-Lee/notes4cs231n">cs231n notes</a></p>
 
       
     </div>
@@ -319,7 +349,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-21 21:37:50" itemprop="dateModified" datetime="2020-08-21T21:37:50+08:00">2020-08-21</time>
+                <time title="修改时间：2020-08-23 01:14:02" itemprop="dateModified" datetime="2020-08-23T01:14:02+08:00">2020-08-23</time>
               </span>
 
           
@@ -338,7 +368,11 @@
 <p>学习在向量本身中编码的相似性</p>
 <h3 id="Representing-Words-By-Their-Context"><a href="#Representing-Words-By-Their-Context" class="headerlink" title="Representing Words By Their Context"></a>Representing Words By Their Context</h3><p>词向量 word vectors/词嵌入 word embeddings/词表示 word representations</p>
 <p>使用中心词c和上下文单词o的词向量的相似性来计算给定c的o的概率</p>
-<p><img src="/2020/08/19/nlp-intruduction/image-20200820172423910.png" alt="image-20200820172423910"><br>$$<br>Likelihood = L(\theta) = \prod_{t=1}^T\prod_{-m \leq j \leq m, j \neq 0 } P(w_{t+j}|w_t;\theta) \<br>cost function:J(\theta) = -\frac 1 T logL(\theta) \<br>连乘使用转化为连加，最小化目标函数\rightleftharpoons 最大化预测精度 \<br>word2vec.prediction.function:P(o|c)=\frac {exp(u_o^T v_c)} {\sum_{w \epsilon V}exp(u_x^T v_c)} \<br>\frac \partial {\partial u_o}logP(o|c) = (1-P(o|c))v_c<br>$$<br>推导过程：</p>
+<p><img src="/2020/08/19/nlp-intruduction/image-20200820172423910.png" alt="image-20200820172423910"><br>$$<br>Likelihood = L(\theta) = \prod_{t=1}^T\prod_{-m \leq j \leq m, j \neq 0 } P(w_{t+j}|w_t;\theta)<br>$$<br>$$<br>cost function:J(\theta) = -\frac 1 T logL(\theta)<br>$$</p>
+<p>$$<br>连乘使用转化为连加，最小化目标函数\rightleftharpoons 最大化预测精度<br>$$</p>
+<p>$$<br>word2vec.prediction.function:P(o|c)=\frac {exp(u_o^T v_c)} {\sum_{w \epsilon V}exp(u_x^T v_c)}<br>$$</p>
+<p>$$<br>\frac \partial {\partial u_o}logP(o|c) = (1-P(o|c))v_c<br>$$</p>
+<p>推导过程：</p>
 <p><a target="_blank" rel="noopener" href="https://github.com/LooperXX/CS224n-Reading-Notes/blob/master/CS224n-2019-01-Introduction%20and%20Word%20Vectors.pdf">cs224n lecture1</a></p>
 <h3 id="SVD-Based-Methods"><a href="#SVD-Based-Methods" class="headerlink" title="SVD Based Methods:"></a>SVD Based Methods:</h3><p>遍历数据集和统计词的共现计数矩阵X,进行SVD分解得到$USV^T$,用U的行来作为字典中所有词的向量</p>
 <p>X的选择：</p>

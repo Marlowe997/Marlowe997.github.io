@@ -20,18 +20,22 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Attention Is All You NeedMachine Translation">
+  <meta name="description" content="Attention Is All You NeedMachine TranslationSequence Machine Translation 想找到欲翻译的最好的句子y，给定句子x$$argmax_yP(y|x)$$使用Bayes将其分解为$$argmax_yP(x|y)P(y)$$ 从并行语料库中学习$P(x|y)$ –对齐关系 Neural Machine Translation架构： S">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Attention Is All You Need">
 <meta property="og:url" content="http://yoursite.com/2020/08/21/Attention-Is-All-You-Need/index.html">
 <meta property="og:site_name" content="Marlowe&#39;s Blog">
-<meta property="og:description" content="Attention Is All You NeedMachine Translation">
+<meta property="og:description" content="Attention Is All You NeedMachine TranslationSequence Machine Translation 想找到欲翻译的最好的句子y，给定句子x$$argmax_yP(y|x)$$使用Bayes将其分解为$$argmax_yP(x|y)P(y)$$ 从并行语料库中学习$P(x|y)$ –对齐关系 Neural Machine Translation架构： S">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/2020/08/21/Attention-Is-All-You-Need/image-20200822111941112.png">
+<meta property="og:image" content="http://yoursite.com/2020/08/21/Attention-Is-All-You-Need/image-20200823002817467.png">
+<meta property="og:image" content="http://yoursite.com/2020/08/21/Attention-Is-All-You-Need/blog/source_posts/Attention-Is-All-You-Need/image-20200823004018467.png">
 <meta property="article:published_time" content="2020-08-21T08:24:41.000Z">
-<meta property="article:modified_time" content="2020-08-21T13:21:43.509Z">
+<meta property="article:modified_time" content="2020-08-22T16:52:55.302Z">
 <meta property="article:author" content="Marlowe">
 <meta property="article:tag" content="NLP">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/08/21/Attention-Is-All-You-Need/image-20200822111941112.png">
 
 <link rel="canonical" href="http://yoursite.com/2020/08/21/Attention-Is-All-You-Need/">
 
@@ -178,10 +182,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-08-21 16:24:41 / 修改时间：21:21:43" itemprop="dateCreated datePublished" datetime="2020-08-21T16:24:41+08:00">2020-08-21</time>
+              <time title="创建时间：2020-08-21 16:24:41" itemprop="dateCreated datePublished" datetime="2020-08-21T16:24:41+08:00">2020-08-21</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-23 00:52:55" itemprop="dateModified" datetime="2020-08-23T00:52:55+08:00">2020-08-23</time>
+              </span>
 
           
 
@@ -194,7 +204,17 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="Attention-Is-All-You-Need"><a href="#Attention-Is-All-You-Need" class="headerlink" title="Attention Is All You Need"></a>Attention Is All You Need</h1><h2 id="Machine-Translation"><a href="#Machine-Translation" class="headerlink" title="Machine Translation"></a>Machine Translation</h2>
+        <h1 id="Attention-Is-All-You-Need"><a href="#Attention-Is-All-You-Need" class="headerlink" title="Attention Is All You Need"></a>Attention Is All You Need</h1><h2 id="Machine-Translation"><a href="#Machine-Translation" class="headerlink" title="Machine Translation"></a>Machine Translation</h2><h3 id="Sequence-Machine-Translation"><a href="#Sequence-Machine-Translation" class="headerlink" title="Sequence Machine Translation"></a>Sequence Machine Translation</h3><p> 想找到欲翻译的最好的句子y，给定句子x<br>$$<br>argmax_yP(y|x)<br>$$<br>使用Bayes将其分解为<br>$$<br>argmax_yP(x|y)P(y)<br>$$<br><img src="/2020/08/21/Attention-Is-All-You-Need/image-20200822111941112.png" alt="image-20200822111941112"></p>
+<p>从并行语料库中学习$P(x|y)$ –对齐关系</p>
+<h3 id="Neural-Machine-Translation"><a href="#Neural-Machine-Translation" class="headerlink" title="Neural Machine Translation"></a>Neural Machine Translation</h3><p>架构： Seq2seq</p>
+<p><img src="/2020/08/21/Attention-Is-All-You-Need/image-20200823002817467.png" alt="image-20200823002817467"></p>
+<p><img src="/2020/08/21/Attention-Is-All-You-Need/blog\source_posts\Attention-Is-All-You-Need\image-20200823004018467.png" alt="image-20200823004018467"></p>
+<h2 id="Seq2seq"><a href="#Seq2seq" class="headerlink" title="Seq2seq"></a>Seq2seq</h2><p> Seq2seq可以适用于许多按照顺序进行表达的任务，e.g. 摘要 对话 解析 代码生成</p>
+<h3 id="Greedy-Decoding"><a href="#Greedy-Decoding" class="headerlink" title="Greedy Decoding"></a>Greedy Decoding</h3><p>每一步都取最可能的单词，无法撤销决定</p>
+<h3 id="Beam-Search-Decoding"><a href="#Beam-Search-Decoding" class="headerlink" title="Beam Search Decoding"></a>Beam Search Decoding</h3><p>在解码器的每一步 跟踪k个最可能的部分翻译</p>
+<p>最终将得分列表按长度标准化，用$\frac 1 t \sum_{i=1}^t P_{LM}(y_i|y_1,…,y_{i-1},x)$选择最大者</p>
+<h2 id="Attention"><a href="#Attention" class="headerlink" title="Attention"></a>Attention</h2><p>在解码器的每一步，使用与编码器的直接连接来专注于源序列的特定部分</p>
+
     </div>
 
     
@@ -274,7 +294,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Attention-Is-All-You-Need"><span class="nav-number">1.</span> <span class="nav-text">Attention Is All You Need</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Machine-Translation"><span class="nav-number">1.1.</span> <span class="nav-text">Machine Translation</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Attention-Is-All-You-Need"><span class="nav-number">1.</span> <span class="nav-text">Attention Is All You Need</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Machine-Translation"><span class="nav-number">1.1.</span> <span class="nav-text">Machine Translation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Sequence-Machine-Translation"><span class="nav-number">1.1.1.</span> <span class="nav-text">Sequence Machine Translation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Neural-Machine-Translation"><span class="nav-number">1.1.2.</span> <span class="nav-text">Neural Machine Translation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Seq2seq"><span class="nav-number">1.2.</span> <span class="nav-text">Seq2seq</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Greedy-Decoding"><span class="nav-number">1.2.1.</span> <span class="nav-text">Greedy Decoding</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Beam-Search-Decoding"><span class="nav-number">1.2.2.</span> <span class="nav-text">Beam Search Decoding</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Attention"><span class="nav-number">1.3.</span> <span class="nav-text">Attention</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
