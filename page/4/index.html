@@ -152,7 +152,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/19/nlp-introduction/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/21/Basic-Knowledge-of-NLP/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -166,7 +166,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/08/19/nlp-introduction/" class="post-title-link" itemprop="url">nlp introduction</a>
+            <a href="/2020/08/21/Basic-Knowledge-of-NLP/" class="post-title-link" itemprop="url">Basic Knowledge of NLP</a>
         </h2>
 
         <div class="post-meta">
@@ -176,14 +176,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2020-08-19 21:20:27" itemprop="dateCreated datePublished" datetime="2020-08-19T21:20:27+08:00">2020-08-19</time>
+              <time title="创建时间：2020-08-21 11:44:54" itemprop="dateCreated datePublished" datetime="2020-08-21T11:44:54+08:00">2020-08-21</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-27 14:04:44" itemprop="dateModified" datetime="2020-08-27T14:04:44+08:00">2020-08-27</time>
+                <time title="修改时间：2020-08-23 12:14:50" itemprop="dateModified" datetime="2020-08-23T12:14:50+08:00">2020-08-23</time>
               </span>
 
           
@@ -197,84 +197,34 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Introduction-to-NLP"><a href="#Introduction-to-NLP" class="headerlink" title="Introduction to NLP"></a>Introduction to NLP</h1><h2 id="传统自然语言处理："><a href="#传统自然语言处理：" class="headerlink" title="传统自然语言处理："></a>传统自然语言处理：</h2><p>单词通过独热向量表示</p>
-<h3 id="Solutions："><a href="#Solutions：" class="headerlink" title="Solutions："></a>Solutions：</h3><p>使用类似WordNet的工具中的列表，获得相似度，但会因不够完整而失败</p>
-<p>学习在向量本身中编码的相似性</p>
-<h3 id="Representing-Words-By-Their-Context"><a href="#Representing-Words-By-Their-Context" class="headerlink" title="Representing Words By Their Context"></a>Representing Words By Their Context</h3><p>词向量 word vectors/词嵌入 word embeddings/词表示 word representations</p>
-<p>使用中心词c和上下文单词o的词向量的相似性来计算给定c的o的概率</p>
-<p><img src="/2020/08/19/nlp-introduction/image-20200820172423910.png" alt="image-20200820172423910"><br>$$<br>Likelihood = L(\theta) = \prod_{t=1}^T\prod_{-m \leq j \leq m, j \neq 0 } P(w_{t+j}|w_t;\theta)<br>$$<br>$$<br>cost function:J(\theta) = -\frac 1 T logL(\theta)<br>$$</p>
-<p>$$<br>连乘使用转化为连加，最小化目标函数\rightleftharpoons 最大化预测精度<br>$$</p>
-<p>$$<br>word2vec.prediction.function:P(o|c)=\frac {exp(u_o^T v_c)} {\sum_{w \epsilon V}exp(u_x^T v_c)}<br>$$</p>
-<p>$$<br>\frac \partial {\partial u_o}logP(o|c) = (1-P(o|c))v_c<br>$$</p>
-<p>推导过程：</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/LooperXX/CS224n-Reading-Notes/blob/master/CS224n-2019-01-Introduction%20and%20Word%20Vectors.pdf">cs224n lecture1</a></p>
-<h3 id="SVD-Based-Methods"><a href="#SVD-Based-Methods" class="headerlink" title="SVD Based Methods:"></a>SVD Based Methods:</h3><p>遍历数据集和统计词的共现计数矩阵X,进行SVD分解得到$USV^T$,用U的行来作为字典中所有词的向量</p>
-<p>X的选择：</p>
-<ul>
-<li>word-document matrix </li>
+          <h1 id="Basic-Knowledeg-of-NLP"><a href="#Basic-Knowledeg-of-NLP" class="headerlink" title="Basic Knowledeg of NLP"></a>Basic Knowledeg of NLP</h1><h2 id="NER-命名实体识别"><a href="#NER-命名实体识别" class="headerlink" title="NER 命名实体识别"></a>NER 命名实体识别</h2><h3 id="problems："><a href="#problems：" class="headerlink" title="problems："></a>problems：</h3><ul>
+<li>很难计算实体边界</li>
+<li>很难知道某物是否为实体</li>
+<li>很难知道未知实体的类别</li>
+<li>实体类相对模糊，依赖于上下文</li>
 </ul>
-<p>词i出现在文档j $X_{ij} ++$</p>
-<ul>
-<li>window based co-occurrence matrix</li>
-</ul>
-<p>X存储单词的共现，成为关联矩阵；计算每个单词在特定大小的窗口中出现的次数</p>
-<p>X $\rightarrow |V| * |V|$</p>
-<p>X上应用SVD得到$X=USV^T$</p>
-<p>选择U前k行得到k维词向量</p>
-<p>$\frac {\sum _{i=1}^k \delta_i} {\sum_{i=1}^{|V|} \delta_i}$表示第一个k维捕获的方差量</p>
-<h3 id="Iteration-Based-Methods-Word2vec"><a href="#Iteration-Based-Methods-Word2vec" class="headerlink" title="Iteration Based Methods - Word2vec"></a>Iteration Based Methods - Word2vec</h3><p>基于迭代的方法一次捕获一个单词的共现情况</p>
-<p>word2vec:</p>
-<ul>
-<li><p>CBOW &amp; skip-gram</p>
-</li>
-<li><p>negative sampling &amp; hierarchical softmax</p>
-</li>
-</ul>
-<p>$$<br>P(w1,w2,…,w_n)=\prod_{i=1}^n P(w_i) \<br>\Rightarrow \prod P(w_i|w_{i-1})<br>$$</p>
-<h4 id="CBOW"><a href="#CBOW" class="headerlink" title="CBOW"></a>CBOW</h4><p>学习两个向量：v(输入向量)当词在上下文中 &amp; u(输出向量)当词是中心词</p>
-<p>输入one-hot向量$x^{(c)}$  ,输出$y^{(c)}$ (已知中心词的one-hot向量)</p>
-<p>$V 输入词矩阵 \quad U输出词矩阵\quad w^i 词汇表单词 \quad v^i \quad v的第i列 \quad  u^i \quad u的第i行$</p>
-<p>model: </p>
-<ol>
-<li><p>输入上下文，生成one-hot向量($输入x^{c-m},…,x^{c+m}，不包含x^c$) </p>
-</li>
-<li><p>得到嵌入词向量($v^{c-m}=Vx^{c-m},…,v^{c+m}$)</p>
-</li>
-<li><p>求平均$\hat v = \frac {v_{c-m} +…+v_{c+m}} {2m}$</p>
-</li>
-<li><p>生成分数向量$z=U\hat v$ ，相似向量点积越高，相似词更为靠近，从而获得更高的分数</p>
-<p>分数转换为$\hat y =softmac(z)$</p>
-</li>
-</ol>
-<p>![批注 2020-08-20 202453](nlp-introduction/批注 2020-08-20 202453.png)</p>
-<p>损失函数(交叉熵)：$h(\hat y,y)=-y_j log(\hat y_j)$</p>
-<p>优化目标函数：</p>
-<p>$min J = -u_c^T \hat v + log\sum_{j=1}^{|V|}exp(u_j^T \hat v)$</p>
-<p>利用SGD更新所有相关的词向量</p>
-<h4 id="Skip-Gram-Model"><a href="#Skip-Gram-Model" class="headerlink" title="Skip-Gram Model"></a>Skip-Gram Model</h4><p>与CBOW大体相同，交换x与y</p>
-<p><img src="/2020/08/19/nlp-introduction/image-20200820203325555.png" alt="image-20200820203325555"></p>
-<p>$min J= \sum_{j=0，j\neq m}^{2m} u_{c-m+j}^Tv_C +2mlog\sum_{k=1}^{|V|}exp(u_k^Tv_c)$</p>
-<p>利用朴素贝叶斯假设拆分概率，利用SGD 更新词向量</p>
-<h4 id="Negtive-Sampling"><a href="#Negtive-Sampling" class="headerlink" title="Negtive Sampling"></a>Negtive Sampling</h4><p>训练时不去直接计算，抽取负样例</p>
-<p>如果中心词和上下文词在语料库中，最大化概率$P(D=1|w,c)$；如果不在，最大化概率$P(D=0|w,c)$。对这两个概率采用极大似然估计的方法：<br>$$<br>\theta =argmax_{\theta}\prod_{(w,c)\in D}P(D=1|w,c,\theta)\prod_{(w,c)\in \overline D}(P=0|w,c,\theta) \ =argmax_{\theta}\sum_{(w,c)\in D}log \frac 1 {1+exp(-u_w^Tv_c)}+\sum_{ {(w,c)\in\overline D} }\frac 1 {1+exp(u_w^Tv_c)}<br>$$<br>$\overline D 为”假的”或者”负的”语料$</p>
-<p><img src="/2020/08/19/nlp-introduction/image-20200820232926546.png" alt="image-20200820232926546"></p>
-<h4 id="Hierarchical-Softmax"><a href="#Hierarchical-Softmax" class="headerlink" title="Hierarchical Softmax"></a>Hierarchical Softmax</h4><p>相对低频词表现更好，负采样对高频词和较低维度向量表现得更好</p>
-<p>单词作为输出单词的概率定义为从根随机游走到单词所对应的叶的概率</p>
-<p><img src="/2020/08/19/nlp-introduction/image-20200820233524692.png" alt="image-20200820233524692"></p>
-<p><img src="/2020/08/19/nlp-introduction/image-20200821003507910.png" alt="image-20200821003507910"></p>
-<h3 id="高维矩阵降维"><a href="#高维矩阵降维" class="headerlink" title="高维矩阵降维"></a>高维矩阵降维</h3><p>利用SVD      $X \rightarrow U\sum V^T$</p>
-<p>$\sum$为对角矩阵，U,V为对应行和列的正交基</p>
-<p>为减少尺度同时保存有效信息，可保留对角矩阵最大的k个值，并将U,V对应的行列保留</p>
-<p>但对于大型矩阵来说计算代价昂贵</p>
-<ul>
-<li>tricks：对高频词进行缩放/使用person相关系数/在基于window的计数中，提高更加接近的单词的计数</li>
-</ul>
-<h3 id="Encoding-meaning-in-vector-differences"><a href="#Encoding-meaning-in-vector-differences" class="headerlink" title="Encoding meaning in vector differences"></a>Encoding meaning in vector differences</h3><p>重视概率之间比值而非单一概率</p>
-<p><img src="/2020/08/19/nlp-introduction/image-20200821015155082.png" alt="image-20200821015155082"></p>
-<h3 id="词向量评估"><a href="#词向量评估" class="headerlink" title="词向量评估"></a>词向量评估</h3><p><img src="/2020/08/19/nlp-introduction/image-20200821015332771.png" alt="image-20200821015332771"></p>
-<h4 id="GloVe"><a href="#GloVe" class="headerlink" title="GloVe"></a>GloVe</h4><p>利用全局统计量，以最小二乘为目标，预测单词j出现在单词i上下文中的概率</p>
-<p>$\hat J=\sum_{i=1}^W\sum_{j=1}^Wf(X_{ij})(u_j^Tv_i-logX_{ij})^2$</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p><a target="_blank" rel="noopener" href="https://github.com/LooperXX/CS224n-Reading-Notes">cs224n notes</a></p>
+<h2 id="Linguistic-Structure-Dependency-Parsing"><a href="#Linguistic-Structure-Dependency-Parsing" class="headerlink" title="Linguistic Structure: Dependency Parsing"></a>Linguistic Structure: Dependency Parsing</h2><h3 id="Cinstituency-Parsing-CFGS-无上下文语法"><a href="#Cinstituency-Parsing-CFGS-无上下文语法" class="headerlink" title="Cinstituency Parsing == CFGS 无上下文语法"></a>Cinstituency Parsing == CFGS 无上下文语法</h3><p>使用逐步嵌套单元构建句子</p>
+<p><img src="/2020/08/21/Basic-Knowledge-of-NLP/image-20200821122531927.png" alt="image-20200821122531927"></p>
+<h3 id="Dependency-Parsing"><a href="#Dependency-Parsing" class="headerlink" title="Dependency Parsing"></a>Dependency Parsing</h3><p>不是使用各种类型的短语，而是直接通过单词与其他的单词关系表示句子的结构，显示哪些单词依赖于哪些其他单词</p>
+<h2 id="Dependency-Grammar-amp-Dependency-Structure"><a href="#Dependency-Grammar-amp-Dependency-Structure" class="headerlink" title="Dependency Grammar &amp; Dependency Structure"></a>Dependency Grammar &amp; Dependency Structure</h2><p>依赖关系：</p>
+<p><img src="/2020/08/21/Basic-Knowledge-of-NLP/image-20200821123324892.png" alt="image-20200821123324892"></p>
+<h2 id="Greedy-Transition-based-Parsing-贪婪判别依赖解析器的简单形式"><a href="#Greedy-Transition-based-Parsing-贪婪判别依赖解析器的简单形式" class="headerlink" title="Greedy Transition-based Parsing 贪婪判别依赖解析器的简单形式"></a>Greedy Transition-based Parsing 贪婪判别依赖解析器的简单形式</h2><p><img src="/2020/08/21/Basic-Knowledge-of-NLP/image-20200821123926630.png" alt="image-20200821123926630"></p>
+<h2 id="Language-Modeling"><a href="#Language-Modeling" class="headerlink" title="Language Modeling"></a>Language Modeling</h2><p>给定单词序列$x^{(1)},…,x^{(t)}$,计算$x^{(t+1)}$概率分布</p>
+<p>$P(x^{(t+1)}|x^{(t)},…,x^{(1)})$</p>
+<p><img src="/2020/08/21/Basic-Knowledge-of-NLP/image-20200821125235851.png" alt="image-20200821125235851"></p>
+<p>n-gram model:收集不同n-gram出现频率</p>
+<p>平滑数据；后退</p>
+<h2 id="RNN"><a href="#RNN" class="headerlink" title="RNN:"></a>RNN:</h2><p><img src="/2020/08/21/Basic-Knowledge-of-NLP/image-20200822162648050.png" alt="image-20200822162648050"></p>
+<p>双向循环神经网络，解决前后文有关联的序列</p>
+<p><img src="/2020/08/21/Basic-Knowledge-of-NLP/image-20200822171553321.png" alt="image-20200822171553321"></p>
+<p>反向传播：</p>
+<p><img src="/2020/08/21/Basic-Knowledge-of-NLP/image-20200822171934906.png" alt="image-20200822171934906"></p>
+<p><img src="/2020/08/21/Basic-Knowledge-of-NLP/image-20200821135301082.png" alt="image-20200821135301082"></p>
+<p><img src="/2020/08/21/Basic-Knowledge-of-NLP/image-20200821140934298.png" alt="image-20200821140934298"></p>
+<h2 id="RNN变体"><a href="#RNN变体" class="headerlink" title="RNN变体"></a>RNN变体</h2><h3 id="LSTM"><a href="#LSTM" class="headerlink" title="LSTM"></a>LSTM</h3><p><img src="/2020/08/21/Basic-Knowledge-of-NLP/image-20200822174841235.png" alt="image-20200822174841235"></p>
+<h3 id="GRU"><a href="#GRU" class="headerlink" title="GRU"></a>GRU</h3><p><img src="/2020/08/21/Basic-Knowledge-of-NLP/image-20200822175123412.png" alt="image-20200822175123412"></p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a target="_blank" rel="noopener" href="https://github.com/LooperXX/CS224n-Reading-Notes">cs224n notes</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Sampson-Lee/notes4cs231n">cs231n notes</a></p>
 
       
     </div>
@@ -293,7 +243,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -358,7 +308,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

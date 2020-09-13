@@ -28,6 +28,7 @@
 <meta property="og:description" content="Introduction to NLP传统自然语言处理：单词通过独热向量表示 Solutions：使用类似WordNet的工具中的列表，获得相似度，但会因不够完整而失败 学习在向量本身中编码的相似性 Representing Words By Their Context词向量 word vectors&#x2F;词嵌入 word embeddings&#x2F;词表示 word representations 使用中">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://yoursite.com/2020/08/19/nlp-introduction/image-20200820172423910.png">
+<meta property="og:image" content="http://yoursite.com/2020/08/19/nlp-introduction/批注%202020-08-20%20202453.png">
 <meta property="og:image" content="http://yoursite.com/2020/08/19/nlp-introduction/image-20200820203325555.png">
 <meta property="og:image" content="http://yoursite.com/2020/08/19/nlp-introduction/image-20200820232926546.png">
 <meta property="og:image" content="http://yoursite.com/2020/08/19/nlp-introduction/image-20200820233524692.png">
@@ -213,11 +214,13 @@
 <p>学习在向量本身中编码的相似性</p>
 <h3 id="Representing-Words-By-Their-Context"><a href="#Representing-Words-By-Their-Context" class="headerlink" title="Representing Words By Their Context"></a>Representing Words By Their Context</h3><p>词向量 word vectors/词嵌入 word embeddings/词表示 word representations</p>
 <p>使用中心词c和上下文单词o的词向量的相似性来计算给定c的o的概率</p>
-<p><img src="/2020/08/19/nlp-introduction/image-20200820172423910.png" alt="image-20200820172423910"><br>$$<br>Likelihood = L(\theta) = \prod_{t=1}^T\prod_{-m \leq j \leq m, j \neq 0 } P(w_{t+j}|w_t;\theta)<br>$$<br>$$<br>cost function:J(\theta) = -\frac 1 T logL(\theta)<br>$$</p>
-<p>$$<br>连乘使用转化为连加，最小化目标函数\rightleftharpoons 最大化预测精度<br>$$</p>
-<p>$$<br>word2vec.prediction.function:P(o|c)=\frac {exp(u_o^T v_c)} {\sum_{w \epsilon V}exp(u_x^T v_c)}<br>$$</p>
-<p>$$<br>\frac \partial {\partial u_o}logP(o|c) = (1-P(o|c))v_c<br>$$</p>
-<p>推导过程：</p>
+<p><img src="/2020/08/19/nlp-introduction/image-20200820172423910.png" alt="image-20200820172423910"></p>
+<script type="math/tex; mode=display">
+Likelihood = L(\theta) = \prod_{t=1}^T\prod_{-m \leq j \leq m, j \neq 0 } P(w_{t+j}|w_t;\theta)</script><script type="math/tex; mode=display">
+cost function:J(\theta) = -\frac 1 T logL(\theta)</script><script type="math/tex; mode=display">
+连乘使用转化为连加，最小化目标函数\rightleftharpoons 最大化预测精度</script><script type="math/tex; mode=display">
+word2vec.prediction.function:P(o|c)=\frac {exp(u_o^T v_c)} {\sum_{w \epsilon V}exp(u_x^T v_c)}</script><script type="math/tex; mode=display">
+\frac \partial {\partial u_o}logP(o|c) = (1-P(o|c))v_c</script><p>推导过程：</p>
 <p><a target="_blank" rel="noopener" href="https://github.com/LooperXX/CS224n-Reading-Notes/blob/master/CS224n-2019-01-Introduction%20and%20Word%20Vectors.pdf">cs224n lecture1</a></p>
 <h3 id="SVD-Based-Methods"><a href="#SVD-Based-Methods" class="headerlink" title="SVD Based Methods:"></a>SVD Based Methods:</h3><p>遍历数据集和统计词的共现计数矩阵X,进行SVD分解得到$USV^T$,用U的行来作为字典中所有词的向量</p>
 <p>X的选择：</p>
@@ -241,8 +244,9 @@
 <li><p>negative sampling &amp; hierarchical softmax</p>
 </li>
 </ul>
-<p>$$<br>P(w1,w2,…,w_n)=\prod_{i=1}^n P(w_i) \<br>\Rightarrow \prod P(w_i|w_{i-1})<br>$$</p>
-<h4 id="CBOW"><a href="#CBOW" class="headerlink" title="CBOW"></a>CBOW</h4><p>学习两个向量：v(输入向量)当词在上下文中 &amp; u(输出向量)当词是中心词</p>
+<script type="math/tex; mode=display">
+P(w1,w2,...,w_n)=\prod_{i=1}^n P(w_i) \\
+\Rightarrow \prod P(w_i|w_{i-1})</script><h4 id="CBOW"><a href="#CBOW" class="headerlink" title="CBOW"></a>CBOW</h4><p>学习两个向量：v(输入向量)当词在上下文中 &amp; u(输出向量)当词是中心词</p>
 <p>输入one-hot向量$x^{(c)}$  ,输出$y^{(c)}$ (已知中心词的one-hot向量)</p>
 <p>$V 输入词矩阵 \quad U输出词矩阵\quad w^i 词汇表单词 \quad v^i \quad v的第i列 \quad  u^i \quad u的第i行$</p>
 <p>model: </p>
@@ -257,7 +261,7 @@
 <p>分数转换为$\hat y =softmac(z)$</p>
 </li>
 </ol>
-<p>![批注 2020-08-20 202453](nlp-introduction/批注 2020-08-20 202453.png)</p>
+<p><img src="/2020/08/19/nlp-introduction/批注 2020-08-20 202453.png" alt="批注 2020-08-20 202453"></p>
 <p>损失函数(交叉熵)：$h(\hat y,y)=-y_j log(\hat y_j)$</p>
 <p>优化目标函数：</p>
 <p>$min J = -u_c^T \hat v + log\sum_{j=1}^{|V|}exp(u_j^T \hat v)$</p>
@@ -267,7 +271,9 @@
 <p>$min J= \sum_{j=0，j\neq m}^{2m} u_{c-m+j}^Tv_C +2mlog\sum_{k=1}^{|V|}exp(u_k^Tv_c)$</p>
 <p>利用朴素贝叶斯假设拆分概率，利用SGD 更新词向量</p>
 <h4 id="Negtive-Sampling"><a href="#Negtive-Sampling" class="headerlink" title="Negtive Sampling"></a>Negtive Sampling</h4><p>训练时不去直接计算，抽取负样例</p>
-<p>如果中心词和上下文词在语料库中，最大化概率$P(D=1|w,c)$；如果不在，最大化概率$P(D=0|w,c)$。对这两个概率采用极大似然估计的方法：<br>$$<br>\theta =argmax_{\theta}\prod_{(w,c)\in D}P(D=1|w,c,\theta)\prod_{(w,c)\in \overline D}(P=0|w,c,\theta) \ =argmax_{\theta}\sum_{(w,c)\in D}log \frac 1 {1+exp(-u_w^Tv_c)}+\sum_{ {(w,c)\in\overline D} }\frac 1 {1+exp(u_w^Tv_c)}<br>$$<br>$\overline D 为”假的”或者”负的”语料$</p>
+<p>如果中心词和上下文词在语料库中，最大化概率$P(D=1|w,c)$；如果不在，最大化概率$P(D=0|w,c)$。对这两个概率采用极大似然估计的方法：</p>
+<script type="math/tex; mode=display">
+\theta =argmax_{\theta}\prod_{(w,c)\in D}P(D=1|w,c,\theta)\prod_{(w,c)\in \overline D}(P=0|w,c,\theta) \\ =argmax_{\theta}\sum_{(w,c)\in D}log \frac 1 {1+exp(-u_w^Tv_c)}+\sum_{ {(w,c)\in\overline D} }\frac 1 {1+exp(u_w^Tv_c)}</script><p>$\overline D 为”假的”或者”负的”语料$</p>
 <p><img src="/2020/08/19/nlp-introduction/image-20200820232926546.png" alt="image-20200820232926546"></p>
 <h4 id="Hierarchical-Softmax"><a href="#Hierarchical-Softmax" class="headerlink" title="Hierarchical Softmax"></a>Hierarchical Softmax</h4><p>相对低频词表现更好，负采样对高频词和较低维度向量表现得更好</p>
 <p>单词作为输出单词的概率定义为从根随机游走到单词所对应的叶的概率</p>
@@ -382,7 +388,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

@@ -152,7 +152,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/21/Attention-Is-All-You-Need/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/25/Bert/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -166,7 +166,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/08/21/Attention-Is-All-You-Need/" class="post-title-link" itemprop="url">Attention Is All You Need</a>
+            <a href="/2020/08/25/Bert/" class="post-title-link" itemprop="url">Bert</a>
         </h2>
 
         <div class="post-meta">
@@ -176,14 +176,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2020-08-21 16:24:41" itemprop="dateCreated datePublished" datetime="2020-08-21T16:24:41+08:00">2020-08-21</time>
+              <time title="创建时间：2020-08-25 21:41:13" itemprop="dateCreated datePublished" datetime="2020-08-25T21:41:13+08:00">2020-08-25</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-24 11:15:35" itemprop="dateModified" datetime="2020-08-24T11:15:35+08:00">2020-08-24</time>
+                <time title="修改时间：2020-08-26 00:33:45" itemprop="dateModified" datetime="2020-08-26T00:33:45+08:00">2020-08-26</time>
               </span>
 
           
@@ -197,42 +197,27 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Attention-Is-All-You-Need"><a href="#Attention-Is-All-You-Need" class="headerlink" title="Attention Is All You Need"></a>Attention Is All You Need</h1><h2 id="Machine-Translation"><a href="#Machine-Translation" class="headerlink" title="Machine Translation"></a>Machine Translation</h2><h3 id="Sequence-Machine-Translation"><a href="#Sequence-Machine-Translation" class="headerlink" title="Sequence Machine Translation"></a>Sequence Machine Translation</h3><p> 想找到欲翻译的最好的句子y，给定句子x<br>$$<br>argmax_yP(y|x)<br>$$<br>使用Bayes将其分解为<br>$$<br>argmax_yP(x|y)P(y)<br>$$<br><img src="/2020/08/21/Attention-Is-All-You-Need/image-20200822111941112.png" alt="image-20200822111941112"></p>
-<p>从并行语料库中学习$P(x|y)$ –对齐关系</p>
-<h3 id="Neural-Machine-Translation"><a href="#Neural-Machine-Translation" class="headerlink" title="Neural Machine Translation"></a>Neural Machine Translation</h3><p>架构： Seq2seq</p>
-<p><img src="/2020/08/21/Attention-Is-All-You-Need/image-20200823002817467.png" alt="image-20200823002817467"></p>
-<p><img src="/2020/08/21/Attention-Is-All-You-Need/image-20200823004018467.png" alt="image-20200823004018467"></p>
-<h2 id="Seq2seq"><a href="#Seq2seq" class="headerlink" title="Seq2seq"></a>Seq2seq</h2><p> Seq2seq可以适用于许多按照顺序进行表达的任务，e.g. 摘要 对话 解析 代码生成</p>
-<h3 id="Greedy-Decoding"><a href="#Greedy-Decoding" class="headerlink" title="Greedy Decoding"></a>Greedy Decoding</h3><p>每一步都取最可能的单词，无法撤销决定</p>
-<h3 id="Beam-Search-Decoding"><a href="#Beam-Search-Decoding" class="headerlink" title="Beam Search Decoding"></a>Beam Search Decoding</h3><p>在解码器的每一步 跟踪k个最可能的部分翻译</p>
-<p>最终将得分列表按长度标准化，用$\frac 1 t \sum_{i=1}^t P_{LM}(y_i|y_1,…,y_{i-1},x)$选择最大者</p>
-<h2 id="Attention"><a href="#Attention" class="headerlink" title="Attention"></a>Attention</h2><p><strong>Attention机制的实质其实就是一个寻址（addressing）的过程</strong>，如上图所示：给定一个和任务相关的查询<strong>Query</strong>向量 <strong>q</strong>，通过计算与<strong>Key</strong>的注意力分布并附加在<strong>Value</strong>上，从而计算<strong>Attention Value</strong>，这个过程实际上是<strong>Attention机制缓解神经网络模型复杂度的体现</strong>：不需要将所有的N个输入信息都输入到神经网络进行计算，只需要从X中选择一些和任务相关的信息输入给神经网络。</p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/53682800">知乎 NLP</a></p>
-<p>文章所说第一种为软性注意力为软性注意力机制：普通模式与键值对模式</p>
+          <h1 id="Related-Knowledge"><a href="#Related-Knowledge" class="headerlink" title="Related Knowledge"></a>Related Knowledge</h1><p>1 of N encoding—&gt; Word Class—&gt; Word Embedding</p>
+<h2 id="Contextualized-Word-Embedding"><a href="#Contextualized-Word-Embedding" class="headerlink" title="Contextualized Word Embedding"></a>Contextualized Word Embedding</h2><p>token&lt;—&gt;embedding </p>
+<h1 id="Bert-Bidirectional-Encoder-Representations-from-Transformers"><a href="#Bert-Bidirectional-Encoder-Representations-from-Transformers" class="headerlink" title="Bert(Bidirectional Encoder Representations from Transformers)"></a>Bert(Bidirectional Encoder Representations from Transformers)</h1><p>Bert = Encoder of Transformer</p>
+<p>中文尽量使用字</p>
+<p>training：</p>
 <ul>
-<li><p>hard attention:只关注到某一个位置的信息</p>
-<p>选取最高概率的输入信息  通过在注意力分布式上随机采样的方法实现</p>
+<li><p>Masked LM  若两个词填在同一个地方均无违和感，则它们有类似的embedding</p>
+<p><img src="/2020/08/25/Bert/image-20200825224534774.png" alt="image-20200825224534774"></p>
 </li>
-<li><p>键值对注意力：Key！=Value</p>
-</li>
-<li><p>多头注意力：是利用多个查询Q = [q1, · · · , qM]，来平行地计算从输入信息中选取多个信息。每个注意力关注输入信息的不同部分，然后再进行拼接：</p>
+<li><p>Next Sentence Prediction</p>
+<p><img src="/2020/08/25/Bert/image-20200825224845791.png" alt="image-20200825224845791"></p>
 </li>
 </ul>
-<p>在解码器的每一步，使用与编码器的直接连接来专注于源序列的特定部分</p>
-<p><img src="/2020/08/21/Attention-Is-All-You-Need/image-20200823104249873.png" alt=" "></p>
-<p>attention是一种给定一组向量值和一个向量。根据查询，计算值的加权和的技术</p>
-<p>利用注意力机制来“动态”地生成不同连接的权重，从而处理变长的信息序列</p>
-<p>self-attention Model:</p>
-<p><img src="/2020/08/21/Attention-Is-All-You-Need/v2-ab400406cf423842e4274527dc5a7074_720w.png" alt="img"></p>
-<p>self-attention中的Q是对自身输入的变换，而在传统的attention中，Q来自外部</p>
-<h2 id="Transformer："><a href="#Transformer：" class="headerlink" title="Transformer："></a>Transformer：</h2><p><img src="/2020/08/21/Attention-Is-All-You-Need/v2-7f8b460cd617fedc822064c4230302b0_720w.jpg" alt="img"></p>
-<p>Encoder:</p>
-<p><img src="/2020/08/21/Attention-Is-All-You-Need/v2-3b97d37951078856097069778293230a_720w.jpg" alt="img"></p>
-<p>Decoder:</p>
-<p><img src="/2020/08/21/Attention-Is-All-You-Need/v2-4dc71fe78c4752645de1f1ba8dd762a4_720w.jpg" alt="img"></p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a target="_blank" rel="noopener" href="https://github.com/LooperXX/CS224n-Reading-Notes">cs224n notes</a></p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/53682800">知乎 NLP</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=ugWDIIOHtPA&t=19s">台大 李宏毅 transformer</a></p>
+<p>  Application: sentiment analysis    document classification.etc</p>
+<p>ERNIE</p>
+<h1 id="Elmo-Embeddings-from-Language-Model"><a href="#Elmo-Embeddings-from-Language-Model" class="headerlink" title="Elmo(Embeddings from Language Model)"></a>Elmo(Embeddings from Language Model)</h1><p>预测下一个token</p>
+<p><img src="/2020/08/25/Bert/image-20200825223211099.png" alt="image-20200825223211099"></p>
+<h1 id="GPT-Generative-Pre-Training"><a href="#GPT-Generative-Pre-Training" class="headerlink" title="GPT(Generative Pre-Training)"></a>GPT(Generative Pre-Training)</h1><p>Transformer Decorder</p>
+<p><img src="/2020/08/25/Bert/image-20200826003128620.png" alt="image-20200826003128620"></p>
+<p>zero-shoting learning</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV17441137fa?from=search&amp;seid=12789557868593942914">李宏毅-ELMO, BERT, GPT讲解</a></p>
 
       
     </div>
@@ -251,7 +236,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -316,7 +301,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
