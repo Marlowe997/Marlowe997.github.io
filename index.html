@@ -175,10 +175,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-09-13 20:20:49 / 修改时间：20:21:53" itemprop="dateCreated datePublished" datetime="2020-09-13T20:20:49+08:00">2020-09-13</time>
+              <time title="创建时间：2020-09-13 20:20:49" itemprop="dateCreated datePublished" datetime="2020-09-13T20:20:49+08:00">2020-09-13</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-17 11:56:33" itemprop="dateModified" datetime="2020-09-17T11:56:33+08:00">2020-09-17</time>
+              </span>
 
           
 
@@ -191,7 +197,29 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="关系抽取"><a href="#关系抽取" class="headerlink" title="关系抽取"></a>关系抽取</h1>
+          <h1 id="关系抽取"><a href="#关系抽取" class="headerlink" title="关系抽取"></a>关系抽取</h1><h2 id="数据集"><a href="#数据集" class="headerlink" title="数据集"></a>数据集</h2><h3 id="当前部分nlp数据集"><a href="#当前部分nlp数据集" class="headerlink" title="当前部分nlp数据集"></a>当前部分nlp数据集</h3><p><a target="_blank" rel="noopener" href="https://github.com/davidsbatista/Annotated-Semantic-Relationships-Datasets">Annotated-Semantic-Relationships-Datasets</a></p>
+<h3 id="数据集来源"><a href="#数据集来源" class="headerlink" title="数据集来源"></a>数据集来源</h3><p><a target="_blank" rel="noopener" href="https://github.com/ShomyLiu/pytorch-relation-extraction">NYT+FREEBASE</a></p>
+<h3 id="freebase介绍"><a href="#freebase介绍" class="headerlink" title="freebase介绍"></a>freebase介绍</h3><p><a target="_blank" rel="noopener" href="https://developer.aliyun.com/article/717320">知识图谱调研 阿里云</a></p>
+<h3 id="数据集分析"><a href="#数据集分析" class="headerlink" title="数据集分析"></a>数据集分析</h3><h4 id="训练集"><a href="#训练集" class="headerlink" title="训练集"></a>训练集</h4><p>len(datasets)= 172448<br>包数量 len(sample_bags)= 280592<br>不同尺寸区间的包对应的数量:  {‘5’: 272872, ‘15’: 5481, ‘25’: 1006, ‘35’: 375, ‘45’: 211, ‘55’: 129, ‘65’: 97, ‘75’: 60, ‘85’: 49, ‘86’: 312}<br>所有实体类型 len(one_layer_type)= 83<br>类型数对应的实体数量: {4: 10610, 3: 13582, 15: 29, 2: 18403, 7: 2888, 20: 1, 14: 56, 10: 663, 8: 1813, 9: 1113, 5: 8185, 17: 11, 11: 368, 13: 110, 16: 18, 12: 205, 18: 6, 6: 5019, 19: 2, 21: 1, 1: 4}</p>
+<h4 id="测试集"><a href="#测试集" class="headerlink" title="测试集"></a>测试集</h4><p>len(datasets)= 172448<br>包数量 len(sample_bags)= 96867<br>不同尺寸区间的包对应的数量:  {‘5’: 93474, ‘15’: 2669, ‘25’: 374, ‘35’: 153, ‘45’: 48, ‘55’: 38, ‘65’: 20, ‘75’: 12, ‘85’: 16, ‘86’: 63}<br>所有实体类型 len(one_layer_type)= 83<br>类型数对应的实体数量: {7: 909, 9: 432, 3: 3285, 17: 7, 8: 626, 16: 11, 2: 4379, 4: 2721, 15: 16, 13: 44, 11: 157, 5: 2250, 10: 277, 6: 1438, 12: 101, 18: 5, 14: 23, 19: 1, 20: 0, 21: 0, 1: 2}</p>
+<h2 id="当前基础模型"><a href="#当前基础模型" class="headerlink" title="当前基础模型"></a>当前基础模型</h2><h3 id="文件书写格式"><a href="#文件书写格式" class="headerlink" title="文件书写格式"></a>文件书写格式</h3><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/29024978">PyTorch实战指南</a></p>
+<h3 id="Bootstrapping"><a href="#Bootstrapping" class="headerlink" title="Bootstrapping"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Luv-GEM/p/11598294.html">Bootstrapping</a></h3><p>Bootstrapping算法的输入是拥有某种关系的少量实体对，作为种子，输出是更多拥有这种关系的实体对。敲黑板！不是找到更多的关系，而是发现拥有某种关系的更多新实体对。</p>
+<p>怎么做的呢？举个栗子，“创始人”是一种关系，如果我们已经有了一个小型知识图谱，里面有3个表达这种关系的实体对：（严定贵，你我贷），（马云，阿里巴巴），（雷军，小米）。</p>
+<p>第一步：在一个大型的语料集中去找包含某一实体对（3个中的任意1个）的句子，全部挑出来。比如：严定贵于2011年创立了你我贷；严定贵是你我贷的创始人；在严定贵董事长的带领下，嘉银金科赴美上市成功。</p>
+<p>第二步：归纳实体对的前后或中间的词语，构造特征模板。比如：A 创立了 B；A 是 B 的创始人；A 的带领下，B。</p>
+<p>第三步：用特征模板去语料集中寻找更多的实体对，然后给所有找到的实体对打分排序，高于阈值的实体对就加入到知识图谱中，扩展现有的实体对。</p>
+<p>第四步：回到第一步，进行迭代，得到更多模板，发现更多拥有该关系的实体对。</p>
+<h4 id="当前存在问题"><a href="#当前存在问题" class="headerlink" title="当前存在问题"></a>当前存在问题</h4><p>细心的小伙伴会发现，不是所有包含“严定贵”和“你我贷”的句子都表达了“创始人”这种关系啊，比如：“在严定贵董事长的带领下，嘉银金科赴美上市成功”——这句话就不是表达“创始人”这个关系的。某个实体对之间可能有很多种关系，哪能一口咬定就是知识图谱中已有的这种关系呢？这不是会得到错误的模板，然后在不断的迭代中放大错误吗？</p>
+<p>没错，这个问题叫做语义漂移（Semantic Draft），一般有两种解决办法：</p>
+<p>一是人工校验，在每一轮迭代中观察挑出来的句子，把不包含这种关系的句子剔除掉。</p>
+<p>二是Bootstrapping算法本身有给新发现的模板和实体对打分，然后设定阈值，筛选出高质量的模板和实体对。具体的公式可以看《Speech and Language Processing》（第3版）第17章。</p>
+<p>Bootstrapping的缺点一是上面提到的语义漂移问题，二是查准率会不断降低而且查全率太低，因为这是一种迭代算法，每次迭代准确率都不可避免会降低，80%—-&gt;60%—-&gt;40%—-&gt;20%…。所以最后发现的新实体对，还需要人工校验。</p>
+<h3 id="远程监督"><a href="#远程监督" class="headerlink" title="远程监督"></a>远程监督</h3><h4 id="基本假设"><a href="#基本假设" class="headerlink" title="基本假设"></a>基本假设</h4><p>对于一个已有的知识图谱（当前为Freebase）中的一个三元组（由一对实体和一个关系构成），假设外部文档库（NYT）中任何包含这对实体的句子，在一定程度上都反映了这种关系。</p>
+<p>具体来说，在训练阶段，用命名实体识别工具，把训练语料库中句子的实体识别出来。如果多个句子包含了两个特定实体，而且这两个实体是Freebase中的实体对（对应有一种关系），那么基于远程监督的假设，认为这些句子都表达了这种关系。于是从这几个句子中提取文本特征，拼接成一个向量，作为这种关系的一个样本的特征向量，用于训练分类器。</p>
+<h4 id="基于PCAA的远程监督算法"><a href="#基于PCAA的远程监督算法" class="headerlink" title="基于PCAA的远程监督算法"></a>基于PCAA的远程监督算法</h4><h2 id="代码实践"><a href="#代码实践" class="headerlink" title="代码实践"></a>代码实践</h2><h3 id="dataset"><a href="#dataset" class="headerlink" title="dataset"></a>dataset</h3><h4 id="NYT"><a href="#NYT" class="headerlink" title="NYT"></a>NYT</h4><p><code>NYT</code>包含<code>post2</code></p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a target="_blank" rel="noopener" href="https://download.csdn.net/download/qq_36426650/12258744?ops_request_misc=%7B%22request_id%22:%22160004575719724839854242%22,%22scm%22:%2220140713.130102334..%22%7D&request_id=160004575719724839854242&biz_id=1&utm_medium=distribute.pc_search_result.none-task-download-2~all~first_rank_ecpm_v3~rank_business_v1-1-12258744.ecpm_v3_rank_business_v1&utm_term=nyt+freebase&spm=1018.2118.3001.4187">CSDN NYT+FREEBASE</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/ShomyLiu/pytorch-pcnn">PCAA  Github</a></p>
+
       
     </div>
 
