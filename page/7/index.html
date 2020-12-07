@@ -152,7 +152,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/18/%E7%AE%80%E5%8D%95%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E8%BF%90%E7%AE%97%E6%A1%86%E6%9E%B6%E7%9A%84%E5%AE%9E%E7%8E%B0/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/18/%E7%AE%80%E5%8D%95%E5%88%86%E7%B1%BB%E6%A8%A1%E5%9E%8B%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -166,7 +166,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/08/18/%E7%AE%80%E5%8D%95%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E8%BF%90%E7%AE%97%E6%A1%86%E6%9E%B6%E7%9A%84%E5%AE%9E%E7%8E%B0/" class="post-title-link" itemprop="url">简单神经网络运算框架的实现</a>
+            <a href="/2020/08/18/%E7%AE%80%E5%8D%95%E5%88%86%E7%B1%BB%E6%A8%A1%E5%9E%8B%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/" class="post-title-link" itemprop="url">简单分类模型的设计与实现</a>
         </h2>
 
         <div class="post-meta">
@@ -177,7 +177,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-08-18 23:18:02 / 修改时间：23:50:33" itemprop="dateCreated datePublished" datetime="2020-08-18T23:18:02+08:00">2020-08-18</time>
+              <time title="创建时间：2020-08-18 23:18:10 / 修改时间：23:44:47" itemprop="dateCreated datePublished" datetime="2020-08-18T23:18:10+08:00">2020-08-18</time>
             </span>
 
           
@@ -191,51 +191,23 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="简单神经网络运算框架的实现"><a href="#简单神经网络运算框架的实现" class="headerlink" title="简单神经网络运算框架的实现"></a>简单神经网络运算框架的实现</h1><h2 id="代码地址："><a href="#代码地址：" class="headerlink" title="代码地址："></a>代码地址：</h2><p><a target="_blank" rel="noopener" href="https://github.com/Marlowe997/ML_Base">https://github.com/Marlowe997/ML_Base</a></p>
-<h2 id="模块结构"><a href="#模块结构" class="headerlink" title="模块结构"></a>模块结构</h2><h3 id="train"><a href="#train" class="headerlink" title="train:"></a>train:</h3><p>载入数据，训练神经网络</p>
-<p>将测试数据以<code>.mat</code> 的形式读入并进行训练</p>
-<h3 id="layers："><a href="#layers：" class="headerlink" title="layers："></a>layers：</h3><p>定义各层神经网络</p>
-<p>数据输入层<code>class data</code>: </p>
-<p>​    <code>get_data</code>  获取数据    <code>shuffle</code>  置乱数据    <code>pull_data</code>   将数据推向输出    </p>
-<p>全连接层<code>class_connected_layer</code> :</p>
-<p>​    <code>forward</code>  前向传播</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self</span>):</span></span><br><span class="line">        self.outputs = self.inputs.dot(self.weights) + np.tile(self.bias,(batch_size, <span class="number">1</span>))</span><br></pre></td></tr></table></figure>
+          <h1 id="简单分类模型的设计与实现"><a href="#简单分类模型的设计与实现" class="headerlink" title="简单分类模型的设计与实现"></a>简单分类模型的设计与实现</h1><h2 id="代码地址"><a href="#代码地址" class="headerlink" title="代码地址"></a>代码地址</h2><p><a target="_blank" rel="noopener" href="https://github.com/Marlowe997/CIFAR-10-VGG-16">https://github.com/Marlowe997/CIFAR-10-VGG-16</a></p>
+<h2 id="测试数据集"><a href="#测试数据集" class="headerlink" title="测试数据集"></a>测试数据集</h2><p>CIFAR-10</p>
+<p>通过<code>torchvision.datasets、torch.utils.data.DataLoader</code>这两个包来加载</p>
+<h2 id="神经网络定义"><a href="#神经网络定义" class="headerlink" title="神经网络定义"></a>神经网络定义</h2><p>网络模型如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">self.conv1 = nn.Conv2d(<span class="number">3</span>,<span class="number">64</span>,<span class="number">3</span>,padding=<span class="number">1</span>)</span><br><span class="line">self.conv2 = nn.Conv2d(<span class="number">64</span>,<span class="number">64</span>,<span class="number">3</span>,padding=<span class="number">1</span>)</span><br><span class="line">self.pool1 = nn.MaxPool2d(<span class="number">2</span>, <span class="number">2</span>)</span><br><span class="line">self.bn1 = nn.BatchNorm2d(<span class="number">64</span>)</span><br><span class="line">self.relu1 = nn.LeakyReLU()</span><br><span class="line"></span><br><span class="line">self.conv3 = nn.Conv2d(<span class="number">64</span>,<span class="number">128</span>,<span class="number">3</span>,padding=<span class="number">1</span>)</span><br><span class="line">self.pool2 = nn.MaxPool2d(<span class="number">2</span>, <span class="number">2</span>, padding=<span class="number">1</span>)</span><br><span class="line">self.bn2 = nn.BatchNorm2d(<span class="number">128</span>)</span><br><span class="line">self.relu2 = nn.LeakyReLU()</span><br><span class="line"></span><br><span class="line">self.conv4 = nn.Conv2d(<span class="number">128</span>,<span class="number">128</span>, <span class="number">3</span>,padding=<span class="number">1</span>)</span><br><span class="line">self.conv5 = nn.Conv2d(<span class="number">128</span>,<span class="number">128</span>, <span class="number">1</span>,padding=<span class="number">1</span>)</span><br><span class="line">self.pool3 = nn.MaxPool2d(<span class="number">2</span>, <span class="number">2</span>, padding=<span class="number">1</span>)</span><br><span class="line">self.bn3 = nn.BatchNorm2d(<span class="number">128</span>)</span><br><span class="line">self.relu3 = nn.LeakyReLU()</span><br><span class="line"></span><br><span class="line">self.conv6 = nn.Conv2d(<span class="number">128</span>, <span class="number">256</span>, <span class="number">3</span>,padding=<span class="number">1</span>)</span><br><span class="line">self.conv7 = nn.Conv2d(<span class="number">256</span>, <span class="number">256</span>, <span class="number">1</span>, padding=<span class="number">1</span>)</span><br><span class="line">self.pool4 = nn.MaxPool2d(<span class="number">2</span>, <span class="number">2</span>, padding=<span class="number">1</span>)</span><br><span class="line">self.bn4 = nn.BatchNorm2d(<span class="number">256</span>)</span><br><span class="line">self.relu4 = nn.LeakyReLU()</span><br><span class="line"></span><br><span class="line">self.conv8 = nn.Conv2d(<span class="number">256</span>, <span class="number">512</span>, <span class="number">3</span>, padding=<span class="number">1</span>)</span><br><span class="line">self.conv9 = nn.Conv2d(<span class="number">512</span>, <span class="number">512</span>, <span class="number">1</span>, padding=<span class="number">1</span>)</span><br><span class="line">self.pool5 = nn.MaxPool2d(<span class="number">2</span>, <span class="number">2</span>, padding=<span class="number">1</span>)</span><br><span class="line">self.bn5 = nn.BatchNorm2d(<span class="number">512</span>)</span><br><span class="line">self.relu5 = nn.LeakyReLU()</span><br><span class="line"></span><br><span class="line">self.fc14 = nn.Linear(<span class="number">512</span>*<span class="number">4</span>*<span class="number">4</span>,<span class="number">1024</span>)</span><br><span class="line">self.drop1 = nn.Dropout2d()</span><br><span class="line">self.fc15 = nn.Linear(<span class="number">1024</span>,<span class="number">1024</span>)</span><br><span class="line">self.drop2 = nn.Dropout2d()</span><br><span class="line">self.fc16 = nn.Linear(<span class="number">1024</span>,<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
 
-<p>​    <code>backward</code>  反向传播</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">backward</span>(<span class="params">self</span>):</span></span><br><span class="line">    <span class="comment"># 求权值的梯度,求得的结果是一个三维的数组,因为有多个样本;</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> np.arange(batch_size):</span><br><span class="line">        self.grad_weights[i, :] = np.tile(self.inputs[i, :], (<span class="number">1</span>, <span class="number">1</span>)).T \</span><br><span class="line">        .dot(np.tile(self.grad_outputs[i, :], (<span class="number">1</span>, <span class="number">1</span>))) + \</span><br><span class="line">        self.weights * weights_decay</span><br><span class="line">    <span class="comment"># 求求偏置的梯度;</span></span><br><span class="line">    self.grad_bias = self.grad_outputs</span><br><span class="line">    <span class="comment"># 求输入的梯度;</span></span><br><span class="line">    self.grad_inputs = self.grad_outputs.dot(self.weights.T)</span><br></pre></td></tr></table></figure>
-
-<p>​    <code>update</code>  更新权值</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>(<span class="params">self</span>):</span></span><br><span class="line"><span class="comment"># 权值与偏置的更新;</span></span><br><span class="line">    grad_weights_average = np.mean(self.grad_weights, <span class="number">0</span>)</span><br><span class="line">    grad_bias_average = np.mean(self.grad_bias, <span class="number">0</span>)</span><br><span class="line">    (self.weights, self.weights_previous_direction) = update_function(self.weights,</span><br><span class="line">    grad_weights_average,</span><br><span class="line">    self.weights_previous_direction)</span><br><span class="line">    (self.bias, self.bias_previous_direction) = update_function(self.bias,</span><br><span class="line">    grad_bias_average,</span><br><span class="line">    self.bias_previous_direction)</span><br></pre></td></tr></table></figure>
-
-<p>激活层<code>class activation_layer</code>:</p>
-<p>​    激活函数<code>sigmoid/tanh/relu</code></p>
-<p>​    <code>    forward</code>  前向传播    <code>backward</code>  反向传播</p>
-<p>损失函数层<code>class loss_layer</code>:</p>
-<p>​    <code> softmax</code>  </p>
-<p>批向量化层<code>class batch_normalization</code>:</p>
-<p>​    <code>forward</code>  前向传播</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self</span>):</span></span><br><span class="line">    momentum = <span class="number">0.9</span></span><br><span class="line">    eps = <span class="number">1e-5</span></span><br><span class="line">    self.mu_mean = np.mean(self.inputs)</span><br><span class="line">    self.mu_var = np.var(self.inputs)</span><br><span class="line">    self.inputs_hat = (self.inputs - self.mu_mean) / np.sqrt(self.mu_var + eps)</span><br><span class="line">    self.running_mean = np.zeros(self.inputs.shape[<span class="number">1</span>])</span><br><span class="line">    self.running_var = np.zeros(self.inputs.shape[<span class="number">1</span>])</span><br><span class="line">    self.running_mean = momentum * self.running_mean + (<span class="number">1</span> - momentum) * self.mu_mean</span><br><span class="line">    self.running_var = momentum * self.running_var + (<span class="number">1</span> - momentum) * self.mu_var</span><br><span class="line">    self.test = self.inputs / np.sqrt(self.running_var + eps) - self.running_mean / np.sqrt(self.running_var + eps)</span><br></pre></td></tr></table></figure>
-
-<p>​    <code>backward</code>  反向传播</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">backward</span>(<span class="params">self</span>):</span></span><br><span class="line">    momentum = <span class="number">0.9</span></span><br><span class="line">    eps = <span class="number">1e-5</span></span><br><span class="line">    dout_ = self.grad_inputs</span><br><span class="line">    dvar = np.sum(dout_ * (self.inputs - self.mu_mean) * <span class="number">-0.5</span> * (self.mu_var + eps) ** <span class="number">-1.5</span>, axis=<span class="number">0</span>)</span><br><span class="line">    dx_ = <span class="number">1</span> / np.sqrt(self.mu_var + eps)</span><br><span class="line">    dvar_ = <span class="number">2</span> * (self.inputs - self.mu_mean) / self.grad_inputs.shape[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># intermediate for convenient calculation</span></span><br><span class="line">    di = dout_ * dx_ + dvar * dvar_</span><br><span class="line">    dmean = <span class="number">-1</span> * np.sum(di, axis=<span class="number">0</span>)</span><br><span class="line">    dmean_ = np.ones_like(self.inputs) / self.grad_inputs.shape[<span class="number">0</span>]</span><br><span class="line">    self.dx = di + dmean * dmean_</span><br></pre></td></tr></table></figure>
-
-<h3 id="function-for-layer"><a href="#function-for-layer" class="headerlink" title="function_for_layer:"></a>function_for_layer:</h3><p>定义激活函数，损失函数: <code>relu/tanh/sigmoid</code>    <code>softmax</code></p>
-<p>初始化方法：<code>xavier</code>  用于超参数随机化搜索的几个分布</p>
-<h3 id="update-method："><a href="#update-method：" class="headerlink" title="update_method："></a>update_method：</h3><p>定义学习率及权值的更新机制</p>
-<p><code>batch_gradient_descent</code> 基于批量的随机梯度下降法</p>
-<h3 id="net："><a href="#net：" class="headerlink" title="net："></a>net：</h3><p>定义神经网络</p>
-<p><code>全连接层</code> -&gt;<code>bn层</code>-&gt;<code>relu</code> -&gt;<code>全连接层</code>-&gt;<code>bn层</code> -&gt;<code>relu</code>-&gt;<code>全连接层</code>  -&gt;<code>softmax</code></p>
-<h3 id="train-1"><a href="#train-1" class="headerlink" title="train:"></a>train:</h3><p>手写体数字简介：来自<a target="_blank" rel="noopener" href="http://yann.lecun.com/exdb/mnist/index.html">Yann LeCun</a> 等人维护的一个手写数字集，以<code>.mat</code>格式读入</p>
-<p>训练数据如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">num_train = <span class="number">2000</span></span><br><span class="line">lr = <span class="number">0.1</span></span><br><span class="line">weight_decay = <span class="number">0.001</span></span><br><span class="line">train_batch_size = <span class="number">100</span></span><br><span class="line">test_batch_size = <span class="number">10000</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h2><p>loss - iteration</p>
-<p><img src="/2020/08/18/%E7%AE%80%E5%8D%95%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E8%BF%90%E7%AE%97%E6%A1%86%E6%9E%B6%E7%9A%84%E5%AE%9E%E7%8E%B0/Figure_1.png" alt="Figure_1"></p>
-<p><code> 测试样本的识别率为: 0.9606</code></p>
+<p>loss函数： <code>CrossEntropyLoss</code></p>
+<p>optimizer: <code>Adam</code></p>
+<p>设计思路：</p>
+<p>​    目前图像分类方面效果较好的网络主要有VGG-16和ResNet，其识别准确率普遍达到93%以上。在进行了一定的调研后，笔者对两种网络都进行了基本的测试，并最终决定选用目前的网络。本神经网络基于VGG-16，并对其进行了一定的改进。由于VGG-16在个人PC端运行时存在内存不足等问题，故在一定程度上减少了卷积核的数量，并对其结构进行了一定的改进。</p>
+<p>​    为了解决梯度爆炸和梯度消失的问题，激活函数采用了LeakyRelu，在一定程度上避免了以上问题的出现，同时也采取了一定的Dropout操作。优化方面采用了Adam作为optimizer，相对而言计算更加简单且高效，参数的变换不会受到梯度的伸缩变换影响，更新的步长也被限制在大致的范围内并能自然地实现步长退火过程。</p>
+<p><code>batch_size == 100</code></p>
+<p><code>epoch == 100</code></p>
+<h2 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h2><p><img src="/2020/08/18/%E7%AE%80%E5%8D%95%E5%88%86%E7%B1%BB%E6%A8%A1%E5%9E%8B%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/image-20200818141303182.png" alt="image-20200818141303182"></p>
+<p>最终在测试集上准确率83.9%</p>
 <h2 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h2><p><a target="_blank" rel="noopener" href="https://github.com/Sampson-Lee/notes4cs231n">github cs231n笔记</a></p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/26138673">Batch Normalization学习笔记</a></p>
-<p><a target="_blank" rel="noopener" href="http://www.mamicode.com/info-detail-2594101.html">用于超参数随机化搜索的几个分布</a></p>
-<p><a target="_blank" rel="noopener" href="http://www.demodashi.com/demo/13010.html">深层神经网络框架的python实现</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/briblue/article/details/84325722">用 PyTorch 从零创建 CIFAR-10 的图像分类器神经网络，并将测试准确率达到 85%</a></p>
 
       
     </div>
@@ -254,7 +226,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span>
+    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -319,7 +291,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
